@@ -1,0 +1,407 @@
+<?xml version="1.0" ?>
+<OpenSCENARIO>
+	<FileHeader author="OSC GENERATOR" date=" " description="" revMajor="1" revMinor="0"/>
+	<ParameterDeclaration/>
+	<Catalogs>
+		<VehicleCatalog>
+			<Directory output_path="Distros/Current/Config/Players/Vehicles"/>
+		</VehicleCatalog>
+		<DriverCatalog>
+			<Directory output_path="Distros/Current/Config/Players/driverCfg.xml"/>
+		</DriverCatalog>
+		<PedestrianCatalog>
+			<Directory output_path="Distros/Current/Config/Players/Pedestrians"/>
+		</PedestrianCatalog>
+		<PedestrianControllerCatalog>
+			<Directory output_path=""/>
+		</PedestrianControllerCatalog>
+		<MiscObjectCatalog>
+			<Directory output_path="Distros/Current/Config/Players/Objects"/>
+		</MiscObjectCatalog>
+		<EnvironmentCatalog>
+			<Directory output_path=""/>
+		</EnvironmentCatalog>
+		<ManeuverCatalog>
+			<Directory output_path=""/>
+		</ManeuverCatalog>
+		<TrajectoryCatalog>
+			<Directory output_path=""/>
+		</TrajectoryCatalog>
+		<RouteCatalog>
+			<Directory output_path=""/>
+		</RouteCatalog>
+	</Catalogs>
+	<RoadNetwork>
+		<Logics filepath="2017-04-04_Testfeld_A9_Nord_offset.xodr"/>
+		<SceneGraph filepath="2017-04-04_Testfeld_A9_Nord_offset.opt.osgb"/>
+		<Signals name="Signals"/>
+	</RoadNetwork>
+	<Entities>
+		<Object name="EGO">
+			<Vehicle category="car" name="Audi_A6_2010_blue">
+				<ParameterDeclaration/>
+				<BoundingBox>
+					<Center x="1.376" y="0" z="0.722"/>
+					<Dimension height="1.444" length="4.924" width="1.872"/>
+				</BoundingBox>
+				<Axles>
+					<Front maxSteering="0.48" positionX="2.91" positionZ="0.342" trackWidth="1.672" wheelDiameter="0.684"/>
+					<Rear maxSteering="0" positionX="0" positionZ="0.342" trackWidth="1.672" wheelDiameter="0.684"/>
+				</Axles>
+				<Properties>
+					<Property name="control" value="external"/>
+					<File filepath=""/>
+				</Properties>
+				<Performance mass="1700" maxDeceleration="9.5" maxSpeed="67"/>
+			</Vehicle>
+			<Controller>
+				<Driver name="DefaultDriver">
+					<ParameterDeclaration/>
+					<Description age="28" eyeDistance="0.065" height="1.8" sex="male" weight="60">
+						<Properties/>
+					</Description>
+				</Driver>
+			</Controller>
+		</Object>
+		<Object name="Player1">
+			<Vehicle category="car" name="CarClass1">
+				<ParameterDeclaration/>
+				<BoundingBox>
+					<Center x="1.376" y="0" z="0.722"/>
+					<Dimension height="1.444" length="4.924" width="1.872"/>
+				</BoundingBox>
+				<Axles>
+					<Front maxSteering="0.48" positionX="2.91" positionZ="0.342" trackWidth="1.672" wheelDiameter="0.684"/>
+					<Rear maxSteering="0" positionX="0" positionZ="0.342" trackWidth="1.672" wheelDiameter="0.684"/>
+				</Axles>
+				<Properties>
+					<Property name="control" value="internal"/>
+					<File filepath=""/>
+				</Properties>
+				<Performance mass="1700" maxDeceleration="9.5" maxSpeed="67"/>
+			</Vehicle>
+			<Controller>
+				<Driver name="DefaultDriver">
+					<ParameterDeclaration/>
+					<Description age="28" eyeDistance="0.065" height="1.8" sex="male" weight="60">
+						<Properties/>
+					</Description>
+				</Driver>
+			</Controller>
+		</Object>
+	</Entities>
+	<Storyboard>
+		<Init>
+			<Actions>
+				<Private object="EGO">
+					<Action>
+						<Position>
+							<World h="7.663740745507101" p="0" r="0" x="3728.331392794964" y="-17465.94162228238" z="0"/>
+						</Position>
+					</Action>
+					<Action>
+						<Longitudinal>
+							<Speed>
+								<Dynamics rate="0" shape="step"/>
+								<Target>
+									<Absolute value="27.65941358024691"/>
+								</Target>
+							</Speed>
+						</Longitudinal>
+					</Action>
+				</Private>
+				<Private object="Player1">
+					<Action>
+						<Position>
+							<World h="nan" p="0" r="0" x="inf" y="inf" z="0"/>
+						</Position>
+					</Action>
+					<Action>
+						<Longitudinal>
+							<Speed>
+								<Dynamics rate="0" shape="step"/>
+								<Target>
+									<Absolute value="nan"/>
+								</Target>
+							</Speed>
+						</Longitudinal>
+					</Action>
+				</Private>
+			</Actions>
+		</Init>
+		<Story name="New Story" owner="">
+			<Act name="New Act 1">
+				<Sequence name="New Sequence 1" numberOfExecutions="1">
+					<Actors>
+						<Entity name="EGO"/>
+					</Actors>
+					<Maneuver name="New Maneuver 1">
+						<ParameterDeclaration/>
+						<Event name="New Event 1" priority="overwrite">
+							<Action name="FM_EGO_keep_velocity">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.13687084520417542" shape="linear"/>
+											<Target>
+												<Absolute value="27.48148148148148"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 1">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="0.0"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 2" priority="overwrite">
+							<Action name="FM_EGO_decelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.1504629629629406" shape="linear"/>
+											<Target>
+												<Absolute value="27.413580246913583"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 2">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="1.3"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 3" priority="overwrite">
+							<Action name="FM_EGO_keep_velocity">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.10915105718745514" shape="linear"/>
+											<Target>
+												<Absolute value="26.463966049382723"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 3">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="1.5"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+					</Maneuver>
+				</Sequence>
+				<Conditions>
+					<Start>
+						<ConditionGroup>
+							<Condition delay="0" edge="rising" name="Start Condition of Act 1">
+								<ByValue>
+									<SimulationTime rule="greater_than" value="0"/>
+								</ByValue>
+							</Condition>
+						</ConditionGroup>
+					</Start>
+				</Conditions>
+			</Act>
+			<Act name="New Act 2">
+				<Sequence name="New Sequence 1" numberOfExecutions="1">
+					<Actors>
+						<Entity name="Player1"/>
+					</Actors>
+					<Maneuver name="New Maneuver 1">
+						<ParameterDeclaration/>
+						<Event name="New Event 1" priority="overwrite">
+							<Action name="FM_EGO_accelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.44444444444443576" shape="linear"/>
+											<Target>
+												<Absolute value="30.75"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 1">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="6.3"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 2" priority="overwrite">
+							<Action name="FM_EGO_decelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.5555555555555536" shape="linear"/>
+											<Target>
+												<Absolute value="30.555555555555554"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 2">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="6.8"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 3" priority="overwrite">
+							<Action name="FM_EGO_accelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.31250000000001776" shape="linear"/>
+											<Target>
+												<Absolute value="30.68055555555556"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 3">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="7.2"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 4" priority="overwrite">
+							<Action name="FM_EGO_decelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.2777777777777798" shape="linear"/>
+											<Target>
+												<Absolute value="30.5"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 4">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="7.6"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 5" priority="overwrite">
+							<Action name="FM_EGO_keep_velocity">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.0" shape="linear"/>
+											<Target>
+												<Absolute value="30.5"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 5">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="8.2"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 6" priority="overwrite">
+							<Action name="FM_EGO_accelerate">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.23148148148146439" shape="linear"/>
+											<Target>
+												<Absolute value="30.60416666666666"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 6">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="9.3"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+						<Event name="New Event 7" priority="overwrite">
+							<Action name="FM_EGO_keep_velocity">
+								<Private>
+									<Longitudinal>
+										<Speed>
+											<Dynamics rate="0.029761904761913222" shape="linear"/>
+											<Target>
+												<Absolute value="30.625"/>
+											</Target>
+										</Speed>
+									</Longitudinal>
+								</Private>
+							</Action>
+							<StartConditions>
+								<ConditionGroup>
+									<Condition delay="0" edge="rising" name="Start Condition of Event 7">
+										<ByValue>
+											<SimulationTime rule="greater_than" value="9.5"/>
+										</ByValue>
+									</Condition>
+								</ConditionGroup>
+							</StartConditions>
+						</Event>
+					</Maneuver>
+				</Sequence>
+				<Conditions>
+					<Start>
+						<ConditionGroup>
+							<Condition delay="0" edge="rising" name="Start Condition of Act 2">
+								<ByValue>
+									<SimulationTime rule="greater_than" value="0"/>
+								</ByValue>
+							</Condition>
+						</ConditionGroup>
+					</Start>
+				</Conditions>
+			</Act>
+		</Story>
+	</Storyboard>
+</OpenSCENARIO>
