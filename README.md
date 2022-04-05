@@ -3,11 +3,14 @@ OSC-Generator is a collection of Python tools to generate [ASAM OpenSCENARIO](ht
 ## Scope of Application
 Currently, OpenSCENARIO V1.0 and OpenDRIVE V1.4 are supported.
 Intersections may currently cause trouble but will be supported in a future release.
+All features are tested in Python 3.7 on Windows 10.
 
 ## Installation
-### Python
-- All features are tested in Python 3.7 on Windows 10.
-- Required packages can be installed via requirements.txt.
+### PyPI
+- OSC-Generator can be installed using pip
+```
+pip install osc_generator
+```
 
 ### Test data
 - For testing, an ASAM OpenDRIVE file is needed. The file '_2017-04-04_Testfeld_A9_Nord_offset.xodr_' from [here](https://service.mdm-portal.de/mdm-portal-application/publDetail.do?publicationId=2594000) can be used by putting it into the _tests/test_data_ folder. This file uses ASAM OpenDRIVE V1.4 standard.
@@ -16,10 +19,15 @@ Intersections may currently cause trouble but will be supported in a future rele
 
 ## Usage
 - Class: OSC-Generator provides a Python class which can be used to generate a scenario in the OpenSCENARIO format from trajectories and an OpenDRIVE file. The file example.py contains runnable example code for usage of this class.
-- CLI: OSC-Generator can also use arguments provided via Python's commandline interface. For information on how to use this feature, see the output of the help function:
-```
-python osc_generator_main.py -h 
-```
+- CLI: 
+  - OSC-Generator can use arguments provided via Python's commandline interface. For information on how to use this feature, see the output of the help function:
+    ```
+    python osc_generator.py -h 
+    ```  
+  - When installed via pip, OSC-Generator can directly be called in the console:
+    ```
+    osc_generator -h 
+    ```
 ## Citation
 An associated [paper](https://ieeexplore.ieee.org/document/9575441) describes the original use case for which the OSC-Generator was created. 
 When using this software, please cite the following: 

@@ -1,4 +1,14 @@
 from setuptools import setup, find_packages
+import os
+
+exec(open(os.path.join(os.path.dirname(__file__), 'osc_generator', 'version.py')).read())
+
+with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'w+') as file:
+    lines = file.readlines()
+    for line in lines:
+        if line.startswith('version = {'):
+            line = 'version = {' + str(__version__) + '}'
+    file.writelines(lines)
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -24,8 +34,11 @@ Typing :: Stubs Only
 Operating System :: Microsoft :: Windows
 """
 
+with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
+    install_requires = [l.strip() for l in f.readlines()]
+
 setup(name='osc_generator',
-      version='0.0.0',
+      version=str(__version__),
       description='OSC-Generator can be used to generate ASAM OpenSCENARIO files from vehicle data and an ASAM OpenDRIVE file.',
       long_description=long_description,
       long_description_content_type="text/markdown",
@@ -37,5 +50,7 @@ setup(name='osc_generator',
       author_email='axel.aigner@efs-auto.com',
       packages=find_packages(exclude=('tests',)),
       classifiers=[_f for _f in CLASSIFIERS.split('\n') if _f],
-      python_requires='>=3.7'
+      python_requires='>=3.7',
+      entry_points={'console_scripts': ['osc_generator=osc_generator.osc_generator:main']},
+      install_requires=install_requires,
       )

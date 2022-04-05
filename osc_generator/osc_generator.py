@@ -20,6 +20,9 @@
 
 import os
 from .tools.converter import Converter
+import sys
+from argparse import ArgumentParser
+from .version import __version__
 
 
 class OSCGenerator:
@@ -56,3 +59,31 @@ class OSCGenerator:
                                       timebased_lat=False,
                                       output='xosc')
         print('Path to OpenSCENARIO file: ' + os.path.abspath(self.converter.outfile))
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument('-v', '--version', action='version', version=('%(prog)s ' + str(__version__)),
+                        help="Show program's version number and exit.")
+    parser.add_argument("-t", "--trajectories", dest="trajectories_path",
+                        help="path to the file containing the object trajectories used as input")
+    parser.add_argument("-d", "--opendrive", dest="opendrive_path",
+                        help="path to the opendrive file which describes the road net which the objects are using")
+    parser.add_argument("-s", "--openscenario", dest="output_scenario_path", default=None,
+                        help="output file path and name. If not specified, a directory and name will be chosen. "
+                             "If the file already exists , it will be overwritten.")
+    try:
+        args = parser.parse_args()
+    except SystemExit as err:
+        if err.code == 2:
+            parser.print_help()
+        sys.exit(0)
+    if (args.trajectories_path is None) or (args.opendrive_path is None):
+        parser.print_help()
+        return
+    oscg = OSCGenerator()
+    oscg.generate_osc(args.trajectories_path, args.opendrive_path, args.output_scenario_path)
+
+
+if __name__ == '__main__':
+    main()
