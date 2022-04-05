@@ -19,7 +19,7 @@
 #  ****************************************************************************
 
 import os
-from osc_generator.tools.converter import Converter
+from .tools.converter import Converter
 
 
 class OSCGenerator:

@@ -21,4 +21,4 @@
 """Subpackage for test tools.
 """
 
-__all__ = ["test_coord_calculations", "test_man_helpers", "test_rulebased", "test_utils"]
+# __all__ = ["test_coord_calculations", "test_man_helpers", "test_rulebased", "test_utils"]

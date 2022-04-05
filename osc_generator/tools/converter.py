@@ -23,7 +23,8 @@ import pandas as pd
 import os
 from typing import Union
 
-from osc_generator.tools import utils, man_helpers
+from osc_generator.tools import utils
+from osc_generator.tools import man_helpers
 from osc_generator.tools.coord_calculations import transform_lanes_rel2abs_from_csv
 from osc_generator.tools.scenario_writer import convert_to_osc
 
