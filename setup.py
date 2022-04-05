@@ -3,12 +3,29 @@ import os
 
 exec(open(os.path.join(os.path.dirname(__file__), 'osc_generator', 'version.py')).read())
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'w+') as file:
-    lines = file.readlines()
-    for line in lines:
-        if line.startswith('version = {'):
-            line = 'version = {' + str(__version__) + '}'
-    file.writelines(lines)
+# with os.path.join(os.path.dirname(__file__), 'README.md') as file_path:
+file_path = os.path.join(os.path.dirname(__file__), 'README.md')
+if os.path.isfile(file_path):
+    with open(file_path, 'r+') as file:
+        lines = file.readlines()
+        for idx, line in enumerate(lines):
+            if line.startswith('version = {'):
+                lines[idx] = 'version = {' + str(__version__) + '}\n'
+        file.seek(0)
+        file.writelines(lines)
+        file.truncate()
+
+# with os.path.join(os.path.dirname(__file__), 'CITATION.cff') as file_path:
+file_path = os.path.join(os.path.dirname(__file__), 'CITATION.cff')
+if os.path.isfile(file_path):
+    with open(file_path, 'r+') as file:
+        lines = file.readlines()
+        for idx, line in enumerate(lines):
+            if line.startswith('version: '):
+                lines[idx] = 'version: ' + str(__version__) + '}\n'
+        file.seek(0)
+        file.writelines(lines)
+        file.truncate()
 
 with open("README.md", "r") as fh:
     long_description = fh.read()

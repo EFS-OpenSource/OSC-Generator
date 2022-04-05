@@ -37,7 +37,7 @@ author = {{Montanari, Francesco}, {Akkaya, Yigit Ali}, {Boßmann, Nils}, {Sicher
 license = {Apache-2.0},
 title = {{OSC-Generator}},
 url = {https://github.com/EFS-OpenSource/OSC-Generator},
-version = {0.0.0}
+version = {0.1.0}
 }
 ```
 
