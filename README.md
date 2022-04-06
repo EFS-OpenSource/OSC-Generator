@@ -9,7 +9,7 @@ All features are tested in Python 3.7 on Windows 10.
 ### PyPI
 - OSC-Generator can be installed using pip
   ```
-  pip install osc_generator
+  pip install osc-generator
   ```
 
 ### Testing
