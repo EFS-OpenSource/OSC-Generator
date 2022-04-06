@@ -70,4 +70,5 @@ setup(name='osc_generator',
       python_requires='>=3.7',
       entry_points={'console_scripts': ['osc_generator=osc_generator.osc_generator:main']},
       install_requires=install_requires,
+      
       )

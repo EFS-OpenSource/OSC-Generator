@@ -8,12 +8,17 @@ All features are tested in Python 3.7 on Windows 10.
 ## Installation
 ### PyPI
 - OSC-Generator can be installed using pip
-```
-pip install osc_generator
-```
+  ```
+  pip install osc_generator
+  ```
 
-### Test data
-- For testing, an ASAM OpenDRIVE file is needed. The file '_2017-04-04_Testfeld_A9_Nord_offset.xodr_' from [here](https://service.mdm-portal.de/mdm-portal-application/publDetail.do?publicationId=2594000) can be used by putting it into the _tests/test_data_ folder. This file uses ASAM OpenDRIVE V1.4 standard.
+### Testing
+- Additional dependencies for testing are required.
+  - Required Python packages can be installed via pip:
+    ```
+    pip install -r requirements_dev.txt
+    ```
+  - For testing, an ASAM OpenDRIVE file is needed. The file '_2017-04-04_Testfeld_A9_Nord_offset.xodr_' from [here](https://service.mdm-portal.de/mdm-portal-application/publDetail.do?publicationId=2594000) can be used by downloading a copy to the _tests/test_data_ folder. This file uses ASAM OpenDRIVE V1.4 format.
 - Run pytest in the _tests_ folder or a parent folder thereof.
 - When everything is set up correctly, all tests should run successfully without raising any warnings.
 
