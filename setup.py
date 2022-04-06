@@ -22,7 +22,7 @@ if os.path.isfile(file_path):
         lines = file.readlines()
         for idx, line in enumerate(lines):
             if line.startswith('version: '):
-                lines[idx] = 'version: ' + str(__version__) + '\n'
+                lines[idx] = 'version: ' + str(__version__) + '}\n'
         file.seek(0)
         file.writelines(lines)
         file.truncate()
@@ -70,5 +70,5 @@ setup(name='osc_generator',
       python_requires='>=3.7',
       entry_points={'console_scripts': ['osc_generator=osc_generator.osc_generator:main']},
       install_requires=install_requires,
-
+      
       )
