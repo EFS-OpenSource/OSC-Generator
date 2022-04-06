@@ -1,1 +1,1 @@
-include requirements.txt requirements_dev.txt
+include requirements.txt requirements_dev.txt LICENSE.txt
