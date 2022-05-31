@@ -25,9 +25,9 @@ from typing import Union
 
 from osc_generator.tools import utils
 from osc_generator.tools import man_helpers
-from osc_generator.tools.coord_calculations import transform_lanes_rel2abs_from_csv
+from osc_generator.tools.coord_calculations import transform_lanes_rel2abs
 from osc_generator.tools.scenario_writer import convert_to_osc
-
+from osc_generator.tools.osi_transformer import osi2df
 
 class Converter:
     """
@@ -89,7 +89,7 @@ class Converter:
         else:
             raise NotImplementedError("use_folder flag is going to be removed")
 
-    def process_trajectories_from_csv(self, relative: bool = True, df_lanes: pd.DataFrame = None):
+    def process_trajectories(self, relative: bool = True, df_lanes: pd.DataFrame = None):
         """
         Process trajectories file and convert it to cleaned main dataframe
         and a dataframe for absolute coordination of lanes
@@ -99,7 +99,13 @@ class Converter:
             df_lanes: If absolute coordinates are used, the lane coordinates needs to be passed here.
 
         """
-        df = pd.read_csv(self.trajectories_path)
+        data_type = ''
+        if self.trajectories_path.endswith(".csv"):
+            df = pd.read_csv(self.trajectories_path)
+            data_type == 'csv'
+        elif self.trajectories_path.endswith(".osi"):
+            df = osi2df(self.trajectories_path)
+            data_type == 'osi'
 
         if relative:
             # Delete not relevant objects (too far away, not visible long enough, not plausible)
@@ -107,7 +113,7 @@ class Converter:
             df, del_obj = utils.delete_irrelevant_objects(df, movobj_grps, min_nofcases=20, max_posx_min=50.0,
                                                           max_posx_nofcases_ratio=10.0)
             # Create absolute lane points from relative
-            self.df_lanes = transform_lanes_rel2abs_from_csv(df)
+            self.df_lanes = transform_lanes_rel2abs(df, data_type)
 
             # Compute coordinates of Objects
             # Find posx-posy movobj_grps and define lat-lon movobj_grps

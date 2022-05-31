@@ -22,6 +22,7 @@ from osc_generator.osc_generator import OSCGenerator
 from xmldiff import main
 import pytest
 import os
+import warnings
 
 
 @pytest.fixture
@@ -41,6 +42,54 @@ class TestOSCGenerator:
         assert [] == diff
         
     def test_generate_osc_class_reuse(self, test_data_dir):
+        trajectories_path = os.path.join(test_data_dir, r'trajectories_file.csv')
+        opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
+        output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+        expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
+        system_under_test = OSCGenerator()
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        diff = main.diff_files(output_scenario_path, expected_scenario_path)
+        assert [] == diff
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        diff = main.diff_files(output_scenario_path, expected_scenario_path)
+        assert [] == diff
+
+    def test_generate_osc_class_osi(self, test_data_dir):
+        try:
+            trajectories_path = os.path.join(test_data_dir, r'trajectories_file.osi')
+            opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
+            output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
+            system_under_test = OSCGenerator()
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+        except NameError:
+            warnings.warn(
+                "Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py",
+                UserWarning)
+
+    def test_generate_osc_class_osi_reuse(self, test_data_dir):
+        try:
+            trajectories_path = os.path.join(test_data_dir, r'trajectories_file.osi')
+            opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
+            output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
+            system_under_test = OSCGenerator()
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+        except NameError:
+            warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
+
+
+    def test_generate_osc_class_csv_reuse(self, test_data_dir):
         trajectories_path = os.path.join(test_data_dir, r'trajectories_file.csv')
         opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')

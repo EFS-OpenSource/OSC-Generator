@@ -20,4 +20,4 @@
 
 """Subpackage for helper/utility modules.
 """
-# __all__ = ["converter", "coord_calculations", "man_helpers", "rulebased", "scenario_writer", "utils"]
+#__all__ = ["converter", "coord_calculations", "man_helpers", "rulebased", "scenario_writer", "utils", "osi_transformer"]

@@ -21,7 +21,8 @@
 
 from osc_generator.osc_generator import OSCGenerator
 
-trajectories_path = r'tests\test_data\trajectories_file.csv'
+#trajectories_path = r'tests\test_data\trajectories_file.csv'
+trajectories_path = r'tests\test_data\trajectories_file.osi'
 opendrive_path = r'tests\test_data\2017-04-04_Testfeld_A9_Nord_offset.xodr'
 
 OSG = OSCGenerator()
