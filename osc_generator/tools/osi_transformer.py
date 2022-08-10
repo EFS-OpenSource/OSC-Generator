@@ -78,6 +78,4 @@ def osi2df(path: str) -> pd.DataFrame:
 
     trace.scenario_file.close()
 
-    print(df)
-
     return df
