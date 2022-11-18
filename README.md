@@ -49,8 +49,8 @@ version = {0.1.0}
 ## Acknowledgment
 This work is supported by the German Federal Ministry of Transport and Digital Infrastructure (BMVI) within the *Automated and Connected Driving* funding program under grant No. 01MM20012F ([SAVeNoW](https://savenow.de)).
 
-@copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
-https://www.efs-auto.com/
+@copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
+https://www.efs-techhub.com/
 https://www.audi.com/de/company.html
 
 @license Apache v2.0

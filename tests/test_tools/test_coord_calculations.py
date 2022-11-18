@@ -1,7 +1,7 @@
 #  ****************************************************************************
 #  @test_coord_calculations.py
 #  
-#  @copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
+#  @copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
 #
 #  @license Apache v2.0
 #  
