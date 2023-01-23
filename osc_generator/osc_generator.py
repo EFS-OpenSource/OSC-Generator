@@ -51,7 +51,7 @@ class OSCGenerator:
         else:
             self.converter.set_paths(trajectories_path, opendrive_path)
 
-        self.converter.process_trajectories_from_csv(relative=True)
+        self.converter.process_trajectories(relative=True)
         self.converter.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
         self.converter.write_scenario(plot=False,
                                       radius_pos_trigger=2.0,

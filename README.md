@@ -33,12 +33,26 @@ All features are tested in Python 3.7 on Windows 10.
     ```
     osc_generator -h 
     ```
+    
+## Open Simulation Interface (OSI) Format Input 
+- In order to use OSI format (.osi) input trajectory files with the OSC-Generator, the following steps are required:
+  - install the Open Simulation Interface (OSI):
+    - follow the installation instructions: https://github.com/OpenSimulationInterface/open-simulation-interface
+  - copy the file 'OSITrace.py':
+    - from "$PATH_TO_OSI_DIRECTORY\open-simulation-interface\format"
+    - to "$PATH_TO_OSC-GENERATOR_DIRECTORY\OSC-Generator\osc_generator\tools\OSI"
+  - run tests
+  
+
+- Usage of this feature functions as described above.   
+- if OSI is not installed, the OSC-Generator can still be used with .csv input trajectory files.
+
 ## Citation
 An associated [paper](https://ieeexplore.ieee.org/document/9575441) describes the original use case for which the OSC-Generator was created. 
 When using this software, please cite the following: 
 ```
 @software{OSC-Generator,
-author = {{Montanari, Francesco}, {Akkaya, Yigit Ali}, {Boßmann, Nils}, {Sichermann, Jörg}, {Müller, Marcel}, {Aigner, Axel Jeronimo}},
+author = {{Montanari, Francesco}, {Akkaya, Yigit Ali}, {Boßmann, Nils}, {Sichermann, Jörg}, {Müller, Marcel}, {Aigner, Axel Jeronimo}, {D'Sa, Dave}},
 license = {Apache-2.0},
 title = {{OSC-Generator}},
 url = {https://github.com/EFS-OpenSource/OSC-Generator},

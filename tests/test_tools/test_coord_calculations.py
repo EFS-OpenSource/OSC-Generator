@@ -47,7 +47,7 @@ def odr_path(test_data_dir):
 
 class TestCoordCalculations:
     def test_lanes_rel2abs_from_csv(self, df, df_lanes):
-        actual = coord_calculations.transform_lanes_rel2abs_from_csv(df)
+        actual = coord_calculations.transform_lanes_rel2abs(df, 'csv')
         expected = df_lanes
         pd.testing.assert_frame_equal(actual, expected)
 
