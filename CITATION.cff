@@ -22,7 +22,7 @@ authors:
     given-names: Dave
 cff-version: "1.1.0"
 license: "Apache-2.0"
-version: 0.1.0
+version: "0.2.0"
 message: "If you use this software, please cite it using these metadata."
 abstract: "Python tools to generate open-scenarios files from trajectory data for automated driving."
 repository-code: "https://github.com/EFS-OpenSource/OSC-Generator"
