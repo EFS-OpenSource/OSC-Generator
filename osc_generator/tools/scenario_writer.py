@@ -161,12 +161,6 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     opendrive_name = opendrive_path.split(os.path.sep)[-1]
     osgb_name = opendrive_name[:-4] + 'opt.osgb'
 
-    # Write head
-    root = Element("OpenSCENARIO")
-    SubElement(root, "FileHeader", revMajor=osc_version.split('.')[0], revMinor=osc_version.split('.')[1], date=" ",
-               description="", author="OSC GENERATOR")
-    # SubElement(root, 'ParameterDeclaration')
-
     # Write Parameters
     param = xosc.ParameterDeclarations()
 
@@ -174,35 +168,15 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     catalog_path = "../Catalogs/Vehicles"
     catalog = xosc.Catalog()
     catalog.add_catalog("VehicleCatalog", catalog_path)
-    # catalogs = SubElement(root, 'Catalogs')
-    # SubElement(SubElement(catalogs, 'VehicleCatalog'), 'Directory',
-    #            output_path="Distros/Current/Config/Players/Vehicles")
-    # SubElement(SubElement(catalogs, 'DriverCatalog'), 'Directory',
-    #            output_path="Distros/Current/Config/Players/driverCfg.xml")
-    # SubElement(SubElement(catalogs, 'PedestrianCatalog'), 'Directory',
-    #            output_path="Distros/Current/Config/Players/Pedestrians")
-    # SubElement(SubElement(catalogs, 'PedestrianControllerCatalog'), 'Directory', output_path="")
-    # SubElement(SubElement(catalogs, 'MiscObjectCatalog'), 'Directory',
-    #            output_path="Distros/Current/Config/Players/Objects")
-    # SubElement(SubElement(catalogs, 'EnvironmentCatalog'), 'Directory', output_path="")
-    # SubElement(SubElement(catalogs, 'ManeuverCatalog'), 'Directory', output_path="")
-    # SubElement(SubElement(catalogs, 'TrajectoryCatalog'), 'Directory', output_path="")
-    # SubElement(SubElement(catalogs, 'RouteCatalog'), 'Directory', output_path="")
 
-    ## Write road network
+    # Write road network
     road = xosc.RoadNetwork(
         roadfile=opendrive_name, scenegraph=osgb_name
     )
-    # road = SubElement(root, 'RoadNetwork')
-    # SubElement(road, 'Logics', filepath=opendrive_name)
-    # SubElement(road, 'SceneGraph', filepath=osgb_name)
-    # SubElement(road, 'Signals', name="Signals")
 
     # Write entities
     entities = xosc.Entities()
-    # ent = SubElement(root, 'Entities')
-
-    # Entity ego
+    # Entity - ego
     egoname = "Ego"
 
     # vehicle
@@ -223,32 +197,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
     entities.add_scenario_object(egoname, ego_veh, cont)
 
-    # ent_obj = SubElement(ent, 'Object', name="EGO")
-    # ent_obj_vehicle = SubElement(ent_obj, 'Vehicle', name="Audi_A6_2010_blue", category="car")
-    #
-    # SubElement(ent_obj_vehicle, 'ParameterDeclaration')
-    # ent_obj_vehicle_bb = SubElement(ent_obj_vehicle, 'BoundingBox')
-    # ent_obj_vehicle_ax = SubElement(ent_obj_vehicle, 'Axles')
-    # ent_obj_vehicle_pr = SubElement(ent_obj_vehicle, 'Properties')
-    #
-    # SubElement(ent_obj_vehicle_bb, 'Center', x="1.376", y="0", z="0.722")
-    # SubElement(ent_obj_vehicle_bb, 'Dimension', width="1.872", length="4.924", height="1.444")
-    # SubElement(ent_obj_vehicle, 'Performance', maxSpeed="67", maxDeceleration="9.5", mass="1700")
-    # SubElement(ent_obj_vehicle_ax, 'Front', maxSteering="0.48", wheelDiameter="0.684", trackWidth="1.672",
-    #            positionX="2.91", positionZ="0.342")
-    # SubElement(ent_obj_vehicle_ax, 'Rear', maxSteering="0", wheelDiameter="0.684", trackWidth="1.672", positionX="0",
-    #            positionZ="0.342")
-    # SubElement(ent_obj_vehicle_pr, 'Property', name="control", value="external")
-    # SubElement(ent_obj_vehicle_pr, 'File', filepath="")
-    #
-    # ent_obj_crl = SubElement(ent_obj, 'Controller')
-    # ent_obj_crl_dr = SubElement(ent_obj_crl, 'Driver', name="DefaultDriver")
-    # SubElement(ent_obj_crl_dr, 'ParameterDeclaration')
-    # ent_obj_crl_dr_de = SubElement(ent_obj_crl_dr, 'Description', weight="60", height="1.8", eyeDistance="0.065",
-    #                                age="28", sex="male")
-    # SubElement(ent_obj_crl_dr_de, 'Properties')
-
-    # Entities objects
+    # Entities - objects
     for idx, obj in objects.items():
         object_count = idx + 1
         objname = f"Player{object_count}"
@@ -261,41 +210,13 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         obj_veh.add_property_file("")
 
         entities.add_scenario_object(objname, obj_veh, cont)
-    # for idx, obj in objects.items():
-    #     object_count = idx + 1
-    #     ent_obj = SubElement(ent, 'Object', name=f"Player{object_count}")
-    #     ent_obj_vehicle = SubElement(ent_obj, 'Vehicle', name=objlist[idx], category="car")
-    #
-    #     SubElement(ent_obj_vehicle, 'ParameterDeclaration')
-    #     ent_obj_vehicle_bb = SubElement(ent_obj_vehicle, 'BoundingBox')
-    #     ent_obj_vehicle_ax = SubElement(ent_obj_vehicle, 'Axles')
-    #     ent_obj_vehicle_pr = SubElement(ent_obj_vehicle, 'Properties')
-    #
-    #     SubElement(ent_obj_vehicle_bb, 'Center', x="1.376", y="0", z="0.722")
-    #     SubElement(ent_obj_vehicle_bb, 'Dimension', width="1.872", length="4.924", height="1.444")
-    #     SubElement(ent_obj_vehicle, 'Performance', maxSpeed="67", maxDeceleration="9.5", mass="1700")
-    #     SubElement(ent_obj_vehicle_ax, 'Front', maxSteering="0.48", wheelDiameter="0.684", trackWidth="1.672",
-    #                positionX="2.91", positionZ="0.342")
-    #     SubElement(ent_obj_vehicle_ax, 'Rear', maxSteering="0", wheelDiameter="0.684", trackWidth="1.672",
-    #                positionX="0", positionZ="0.342")
-    #     SubElement(ent_obj_vehicle_pr, 'Property', name="control", value="internal")
-    #     SubElement(ent_obj_vehicle_pr, 'File', filepath="")
-    #
-    #     ent_obj_crl = SubElement(ent_obj, 'Controller')
-    #     ent_obj_crl_dr = SubElement(ent_obj_crl, 'Driver', name="DefaultDriver")
-    #     SubElement(ent_obj_crl_dr, 'ParameterDeclaration')
-    #     ent_obj_crl_dr_de = SubElement(ent_obj_crl_dr, 'Description', weight="60", height="1.8", eyeDistance="0.065",
-    #                                    age="28", sex="male")
-    #     SubElement(ent_obj_crl_dr_de, 'Properties')
-
-#####################################################
 
     # Write Init
     init = xosc.Init()
     step_time = xosc.TransitionDynamics(
         xosc.DynamicsShapes.step, xosc.DynamicsDimension.rate, 0
     )
-    # Start conditions - Ego
+    # Start (init) conditions - Ego
     egospeed = xosc.AbsoluteSpeedAction(float(f'{ego[2]}'), step_time)
     egostart = xosc.TeleportAction(xosc.WorldPosition(x=f'{ego[0]}', y=f'{ego[1]}', z='0', h=f'{ego[3]}', p='0', r='0'))
     init.add_init_action(egoname, egostart)
@@ -309,36 +230,10 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         object_count = idx + 1
         objname = f"Player{object_count}"
         objspeed = xosc.AbsoluteSpeedAction(float(f'{obj[2]}'), step_time)
-        objstart = xosc.TeleportAction(xosc.WorldPosition(x=f'{obj[0]}', y=f'{obj[1]}', z='0', h=f'{obj[3]}', p='0', r='0'))
+        objstart = xosc.TeleportAction(xosc.WorldPosition(x=f'{obj[0]}', y=f'{obj[1]}',
+                                                          z='0', h=f'{obj[3]}', p='0', r='0'))
         init.add_init_action(objname, objstart)
         init.add_init_action(objname, objspeed)
-
-    # # Write storyboard
-    # stb = SubElement(root, 'Storyboard')
-    #
-    # # Init
-    # init = SubElement(stb, 'Init')
-    # init_act = SubElement(init, 'Actions')
-    #
-    # # Start condition ego
-    # init_act_obj = SubElement(init_act, 'Private', object='EGO')
-    # init_act_obj_pos = SubElement(SubElement(init_act_obj, 'Action'), 'Position')
-    # SubElement(init_act_obj_pos, 'World', x=f'{ego[0]}', y=f'{ego[1]}', z='0', h=f'{ego[3]}', p='0', r='0')
-    # init_act_obj_v = SubElement(SubElement(SubElement(init_act_obj, 'Action'), 'Longitudinal'), 'Speed')
-    # SubElement(init_act_obj_v, 'Dynamics', shape="step", rate="0")
-    # SubElement(SubElement(init_act_obj_v, 'Target'), 'Absolute', value=f'{ego[2]}')
-    #
-    # # Start conditions objects
-    # for idx, obj in objects.items():
-    #     object_count = idx + 1
-    #     init_act_obj = SubElement(init_act, 'Private', object=f'Player{object_count}')
-    #     init_act_obj_pos = SubElement(SubElement(init_act_obj, 'Action'), 'Position')
-    #     SubElement(init_act_obj_pos, 'World', x=f'{obj[0]}', y=f'{obj[1]}', z='0', h=f'{obj[3]}', p='0', r='0')
-    #     init_act_obj_v = SubElement(SubElement(SubElement(init_act_obj, 'Action'), 'Longitudinal'), 'Speed')
-    #     SubElement(init_act_obj_v, 'Dynamics', shape="step", rate="0")
-    #     SubElement(SubElement(init_act_obj_v, 'Target'), 'Absolute', value=f'{obj[2]}')
-
-    #####################################################
 
     # Write Story
     story = xosc.Story("New Story")
@@ -355,8 +250,9 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         standstill = False
 
         # Create necessary Story Element Objects
-        man = xosc.Maneuver(f'New Maneuver 1', parameters=param)
-        mangroup = xosc.ManeuverGroup(f'New Sequence 1')
+        man = xosc.Maneuver(f'New Maneuver {key + 1}', parameters=param)
+        man_lat = xosc.Maneuver(f'New Maneuver {key + 1}', parameters=param)
+        mangroup = xosc.ManeuverGroup(f'New Sequence {key + 1}')
         mangroup.add_actor(name)
         # Start trigger for Act
         act_trig_cond = xosc.SimulationTimeCondition(value=0, rule=xosc.Rule.greaterThan)
@@ -364,6 +260,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                                     conditionedge=xosc.ConditionEdge.rising, valuecondition=act_trig_cond)
         act = xosc.Act(f'New Act {key + 1}', starttrigger=act_starttrigger)
 
+        long_event = False
         # Loop ego specific maneuvers (accelerate, decelerate, standstill, ...)
         for idx, ego_maneuver in enumerate(maneuver_list):
             if str(ego_maneuver[2]) != 'FM_EGO_standstill':
@@ -378,12 +275,14 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
                 # Starting Condition of long maneuvers
                 if timebased_lon:
+                    long_event = True
                     # Time based trigger
                     trig_cond = xosc.SimulationTimeCondition(value=float(ego_maneuver[0]) / 10, rule=xosc.Rule.greaterThan)
                     trigger = xosc.ValueTrigger(name=f'Start Condition of Event {eventcounter}', delay=0,
                                                 conditionedge=xosc.ConditionEdge.rising, valuecondition=trig_cond)
 
                 elif not timebased_lon:
+                    long_event = True
                     # Position based absolute position trigger
                     worldpos = xosc.WorldPosition(x=ego_maneuver[3], y=ego_maneuver[4],
                                                   z='0', h='0', p='0', r='0')
@@ -399,17 +298,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 action = xosc.AbsoluteSpeedAction(speed=ego_maneuver[5], transition_dynamics=dyn)
                 event.add_action(actionname=f"{ego_maneuver[2]}", action=action)
 
-            # Progress test
-            #     man = xosc.Maneuver("TestMan")
                 man.add_event(event)
-    #         # mangroup = xosc.ManeuverGroup("TestManGroup")
-    #         # mangroup.add_actor(name)
-    #     mangroup.add_maneuver(man)
-    #     # act = xosc.Act("TestAct")
-    #     act.add_maneuver_group(mangroup)
-    # # story = xosc.Story("TestStory")
-    #     story.add_act(act)
-            # sb.add_story(story)
 
             if standstill & (str(ego_maneuver[2]) != 'FM_EGO_standstill'):
                 standstill = False
@@ -429,11 +318,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
                 man.add_event(event)
 
-        # # Progress test
-        # mangroup.add_maneuver(man)
-        # act.add_maneuver_group(mangroup)
-        # story.add_act(act)
-
+        lateral_event = False
         # Loop infrastructure specific maneuvers
         current_inf_maneuver_array = inf_maneuver_array[key]
         for idx, inf_maneuver in enumerate(current_inf_maneuver_array):
@@ -456,6 +341,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                                                          rule=xosc.Rule.greaterThan)
                 trigger = xosc.ValueTrigger(name=f'Start Condition of Event {eventcounter}', delay=0,
                                             conditionedge=xosc.ConditionEdge.rising, valuecondition=trig_cond)
+                lateral_event = True
 
             elif not timebased_lat:
                 # Position based absolute position trigger
@@ -466,6 +352,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 trigger = xosc.EntityTrigger(name=f'Start Condition of Event {eventcounter}', delay=0,
                                              conditionedge=xosc.ConditionEdge.rising, entitycondition=trig_cond,
                                              triggerentity=f'{name}')
+                lateral_event = True
 
             event.add_trigger(trigger)
             dyn = xosc.TransitionDynamics(shape=xosc.DynamicsShapes.sinusoidal,
@@ -474,146 +361,15 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                                                    target_lane_offset=4.26961e-316)
             event.add_action(actionname=f"{inf_maneuver[2]}", action=action)
 
-            man.add_event(event)
+            man_lat.add_event(event)
 
-        # Progress test
-        mangroup.add_maneuver(man)
+        # Add maneuver events to act and story
+        if long_event:
+            mangroup.add_maneuver(man)
+        if lateral_event:
+            mangroup.add_maneuver(man_lat)
         act.add_maneuver_group(mangroup)
         story.add_act(act)
-
-    #####################################################
-    # # Write story
-    # sry = SubElement(stb, 'Story', name="New Story", owner="")
-    #
-    # # For each vehicle write a separate Act
-    # # (Act --> for each vehicle; Events inside of Act --> for each of vehicles maneuvers)
-    # for key, maneuver_list in ego_maneuver_array.items():
-    #     if key == 0:
-    #         name = 'EGO'
-    #     else:
-    #         name = 'Player' + str(key)
-    #
-    #     act = SubElement(sry, 'Act', name=f"New Act {key + 1}")
-    #     sqc = SubElement(act, 'Sequence', name="New Sequence 1", numberOfExecutions="1")
-    #     SubElement(SubElement(sqc, 'Actors'), 'Entity', name=f"{name}")
-    #     man = SubElement(sqc, 'Maneuver', name="New Maneuver 1")
-    #     SubElement(man, 'ParameterDeclaration')
-    #
-    #     eventcounter = 0
-    #     standstill = False
-    #     # Loop ego specific maneuvers (accelerate, decelerate, standstill, ...)
-    #     for idx, ego_maneuver in enumerate(maneuver_list):
-    #         if str(ego_maneuver[2]) != 'FM_EGO_standstill':
-    #             eventcounter += 1
-    #
-    #         if standstill & (str(ego_maneuver[2]) == 'FM_EGO_standstill'):
-    #             standstill = True
-    #
-    #         if not standstill:
-    #             # Long maneuvers without move_in, move_out
-    #             man_evt = SubElement(man, 'Event', name=f'New Event {eventcounter}', priority="overwrite")
-    #
-    #             man_evt_ac = SubElement(man_evt, 'Action', name=f"{ego_maneuver[2]}")
-    #             man_evt_ac_v = SubElement(SubElement(SubElement(man_evt_ac, 'Private'), 'Longitudinal'), 'Speed')
-    #             SubElement(man_evt_ac_v, 'Dynamics', shape="linear", rate=f"{ego_maneuver[6]}")
-    #             SubElement(SubElement(man_evt_ac_v, 'Target'), 'Absolute', value=f'{ego_maneuver[5]}')
-    #
-    #             # Starting Condition of long maneuvers
-    #             man_evt_cond = SubElement(SubElement(SubElement(man_evt,
-    #                                                             'StartConditions'),
-    #                                                  'ConditionGroup'),
-    #                                       'Condition', name=f'Start Condition of Event {eventcounter}',
-    #                                       delay="0", edge="rising")
-    #
-    #             if timebased_lon:
-    #                 # Time based trigger
-    #                 SubElement(SubElement(man_evt_cond, 'ByValue'), 'SimulationTime',
-    #                            value=f'{int(ego_maneuver[0]) / 10}', rule="greater_than")
-    #
-    #             elif not timebased_lon:
-    #                 # Position based absolute position trigger
-    #                 man_evt_cond_by = SubElement(man_evt_cond, 'ByEntity')
-    #                 SubElement(SubElement(man_evt_cond_by, 'TriggeringEntities', rule="any"), 'Entity', name=f'{name}')
-    #                 SubElement(SubElement(SubElement(SubElement(man_evt_cond_by,
-    #                                                             'EntityCondition'),
-    #                                                  'Distance', value=f'{radius_pos_trigger}', freespace="0",
-    #                                                  alongRoute="0", rule="less_than"),
-    #                                       'Position'),
-    #                            'World', x=f'{ego_maneuver[3]}', y=f'{ego_maneuver[4]}', z='0', h='0', p='0', r='0')
-    #
-    #         if standstill & (str(ego_maneuver[2]) != 'FM_EGO_standstill'):
-    #             standstill = False
-    #
-    #             # Maneuver: change speed by absolute elapsed simulation time trigger
-    #             man_evt = SubElement(man, 'Event', name=f'New Event {eventcounter}', priority="overwrite")
-    #
-    #             man_evt_ac = SubElement(man_evt, 'Action', name=f"{ego_maneuver[2]}")
-    #             man_evt_ac_v = SubElement(SubElement(SubElement(man_evt_ac, 'Private'), 'Longitudinal'), 'Speed')
-    #             SubElement(man_evt_ac_v, 'Dynamics', shape="linear", rate=f"{ego_maneuver[6]}")
-    #             SubElement(SubElement(man_evt_ac_v, 'Target'), 'Absolute', value=f'{ego_maneuver[5]}')
-    #
-    #             man_evt_cond = SubElement(SubElement(SubElement(man_evt,
-    #                                                             'StartConditions'),
-    #                                                  'ConditionGroup'),
-    #                                       'Condition', name=f'Start Condition of Event {eventcounter}',
-    #                                       delay="0", edge="rising")
-    #             SubElement(SubElement(man_evt_cond, 'ByValue'), 'SimulationTime',
-    #                        value=f'{int(ego_maneuver[0]) / 10}', rule="greater_than")
-    #                                                                                       ######################
-    #     # Loop infrastructure specific maneuvers
-    #     current_inf_maneuver_array = inf_maneuver_array[key]
-    #     for idx, inf_maneuver in enumerate(current_inf_maneuver_array):
-    #         eventcounter += 1
-    #
-    #         if inf_maneuver[2] == 'FM_INF_lane_change_left':
-    #             lane_change = 1
-    #         elif inf_maneuver[2] == 'FM_INF_lane_change_right':
-    #             lane_change = -1
-    #         else:
-    #             raise ValueError('Lane change maneuver name is wrong')
-    #
-    #         # Lane Change
-    #         man_evt = SubElement(man, 'Event', name=f'New Event {eventcounter}', priority="overwrite")
-    #         man_evt_ac = SubElement(man_evt, 'Action', name=f"{inf_maneuver[2]}")
-    #         man_evt_ac_lane = SubElement(SubElement(SubElement(man_evt_ac, 'Private'), 'Lateral'), 'LaneChange',
-    #                                      targetLaneOffset="4.26961e-316")
-    #         SubElement(man_evt_ac_lane, 'Dynamics', time=f"{inf_maneuver[5]}", shape="sinusoidal")
-    #         SubElement(SubElement(man_evt_ac_lane, 'Target'), 'Relative', object=f'{name}', value=f'{lane_change}')
-    #
-    #         # Starting Condition of lane change
-    #         man_evt_cond = SubElement(SubElement(SubElement(man_evt,
-    #                                                         'StartConditions'),
-    #                                              'ConditionGroup'),
-    #                                   'Condition', name=f'Start Condition of Event {eventcounter}',
-    #                                   delay="0", edge="rising")
-    #
-    #         if timebased_lat:
-    #             # Time based_lat trigger
-    #             SubElement(SubElement(man_evt_cond, 'ByValue'), 'SimulationTime', value=f'{int(inf_maneuver[0]) / 10}',
-    #                        rule="greater_than")
-    #
-    #         elif not timebased_lat:
-    #             # Position based absolute position trigger
-    #             man_evt_cond_by = SubElement(man_evt_cond, 'ByEntity')
-    #             SubElement(SubElement(man_evt_cond_by, 'TriggeringEntities', rule="any"), 'Entity', name=f'{name}')
-    #             SubElement(SubElement(SubElement(SubElement(man_evt_cond_by,
-    #                                                         'EntityCondition'),
-    #                                              'Distance', value=f'{radius_pos_trigger}', freespace="0",
-    #                                              alongRoute="0", rule="less_than"),
-    #                                   'Position'),
-    #                        'World', x=f'{inf_maneuver[3]}', y=f'{inf_maneuver[4]}', z='0', h='0', p='0', r='0')
-    #
-    #     # Starting condition of act
-    #     SubElement(SubElement(SubElement(SubElement(SubElement(SubElement(act,
-    #                                                                       'Conditions'),
-    #                                                            'Start'),
-    #                                                 'ConditionGroup'),
-    #                                      'Condition', name=f"Start Condition of Act {key + 1}", delay="0",
-    #                                      edge="rising"),
-    #                           'ByValue'),
-    #                'SimulationTime', value="0", rule="greater_than")
-
-    #####################################################
 
     # Create Scenario
     sb.add_story(story)
@@ -626,10 +382,29 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         road,
         catalog
     )
-    path = os.path.join(dir_name, 'man_export_' + os.path.basename(section_name) + '_scengen_test.xosc')
-    scenario.write_xml(path)
 
-    # path = write_pretty(root, 'xosc', use_folder, timebased_lon, timebased_lat,
-    #                     dir_name, section_name, radius_pos_trigger, output_path)
+    # Create Output Path
+    if output_path is not None:
+        path = output_path
+
+    else:
+        if use_folder:
+            if timebased_lon and timebased_lat:
+                path = os.path.join(dir_name, 'man_export_' + os.path.basename(section_name) + '_time_lon_lat.xosc')
+            elif timebased_lon and not timebased_lat:
+                path = os.path.join(dir_name,
+                                    'man_export_' + os.path.basename(section_name) + '_time_lon_pos_lat_' + str(
+                                        radius_pos_trigger) + '_m.xosc')
+            elif not timebased_lon and timebased_lat:
+                path = os.path.join(dir_name, 'man_export_' + os.path.basename(section_name) + '_pos_lon_time_lat.xosc')
+
+            else:
+                path = os.path.join(dir_name, 'man_export_' + os.path.basename(section_name) + '_pos_lon_lat_' +
+                                    str(radius_pos_trigger) + '_m.xosc')
+
+        else:
+            raise NotImplementedError("use_folder flag is going to be removed")
+    # Write Scenario to xml
+    scenario.write_xml(path)
 
     return path
