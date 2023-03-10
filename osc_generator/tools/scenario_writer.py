@@ -26,6 +26,7 @@ from xml.etree.ElementTree import Element, SubElement
 from xml.etree import ElementTree
 from xml.dom import minidom
 from scenariogeneration import xosc
+import datetime
 
 def write_pretty(elem: Element, output: str, use_folder: bool, timebased_lon: bool, timebased_lat: bool,
                  dir_name: str, section_name: str, radius_pos_trigger: float, output_path: str = None):
@@ -380,7 +381,8 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         entities,
         sb,
         road,
-        catalog
+        catalog,
+        creation_date=datetime.datetime(2023, 1, 1, 0, 0, 0, 0)
     )
 
     # Create Output Path
