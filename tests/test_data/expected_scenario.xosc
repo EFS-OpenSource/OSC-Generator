@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <OpenSCENARIO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="OpenScenario.xsd">
-    <FileHeader description="" author="OSC Generator" revMajor="1" revMinor="1" date="2023-01-01T00:00:00"/>
+    <FileHeader description="" author="OSC Generator" revMajor="1" revMinor="2" date="2023-01-01T00:00:00"/>
     <ParameterDeclarations/>
     <CatalogLocations>
         <VehicleCatalog>
@@ -125,7 +125,7 @@
                     </Actors>
                     <Maneuver name="New Maneuver 1">
                         <ParameterDeclarations/>
-                        <Event name="New Event 1" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 1" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_keep_velocity">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -148,7 +148,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 2" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 2" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_decelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -171,7 +171,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 3" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 3" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_keep_velocity">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -214,7 +214,7 @@
                     </Actors>
                     <Maneuver name="New Maneuver 2">
                         <ParameterDeclarations/>
-                        <Event name="New Event 1" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 1" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_accelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -237,7 +237,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 2" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 2" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_decelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -260,7 +260,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 3" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 3" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_accelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -283,7 +283,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 4" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 4" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_decelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -306,7 +306,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 5" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 5" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_keep_velocity">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -329,7 +329,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 6" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 6" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_accelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
@@ -352,7 +352,7 @@
                                 </ConditionGroup>
                             </StartTrigger>
                         </Event>
-                        <Event name="New Event 7" priority="overwrite" maximumExecutionCount="1">
+                        <Event name="New Event 7" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_keep_velocity">
                                 <PrivateAction>
                                     <LongitudinalAction>
