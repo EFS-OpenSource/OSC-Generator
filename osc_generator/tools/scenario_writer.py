@@ -226,6 +226,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     # init storyboard object
     sb = xosc.StoryBoard(init)
 
+    # print(objects)
     # Start (init) conditions objects
     for idx, obj in objects.items():
         object_count = idx + 1
@@ -272,7 +273,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
             if not standstill:
                 ## Long maneuvers without move_in, move_out
-                event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.overwrite)
+                event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.override)
 
                 # Starting Condition of long maneuvers
                 if timebased_lon:
@@ -305,7 +306,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 standstill = False
 
                 # Maneuver: change speed by absolute elapsed simulation time trigger
-                event = xosc.Event(f'New Event {eventcounter}', priority=xosc.Priority.overwrite)
+                event = xosc.Event(f'New Event {eventcounter}', priority=xosc.Priority.override)
 
                 trig_cond = xosc.SimulationTimeCondition(value=float(ego_maneuver[0]) / 10, rule=xosc.Rule.greaterThan)
                 trigger = xosc.ValueTrigger(name=f'Start Condition of Event {eventcounter}', delay=0,
@@ -382,7 +383,8 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         sb,
         road,
         catalog,
-        creation_date=datetime.datetime(2023, 1, 1, 0, 0, 0, 0)
+        creation_date=datetime.datetime(2023, 1, 1, 0, 0, 0, 0),
+        osc_minor_version=2
     )
 
     # Create Output Path
