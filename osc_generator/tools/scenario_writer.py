@@ -334,7 +334,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 raise ValueError('Lane change maneuver name is wrong')
 
             # Lane Change
-            event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.overwrite)
+            event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.override)
 
             # Starting Condition of lane change
             if timebased_lat:
