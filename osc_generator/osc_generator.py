@@ -1,7 +1,7 @@
 #  ****************************************************************************
 #  @osc_generator.py
 #  
-#  @copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
+#  @copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
 #
 #  @license Apache v2.0
 #  
@@ -51,7 +51,7 @@ class OSCGenerator:
         else:
             self.converter.set_paths(trajectories_path, opendrive_path)
 
-        self.converter.process_trajectories_from_csv(relative=True)
+        self.converter.process_trajectories(relative=True)
         self.converter.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
         self.converter.write_scenario(plot=False,
                                       radius_pos_trigger=2.0,

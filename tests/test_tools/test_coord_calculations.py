@@ -1,7 +1,7 @@
 #  ****************************************************************************
 #  @test_coord_calculations.py
 #  
-#  @copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
+#  @copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
 #
 #  @license Apache v2.0
 #  
@@ -47,7 +47,7 @@ def odr_path(test_data_dir):
 
 class TestCoordCalculations:
     def test_lanes_rel2abs_from_csv(self, df, df_lanes):
-        actual = coord_calculations.transform_lanes_rel2abs_from_csv(df)
+        actual = coord_calculations.transform_lanes_rel2abs(df, 'csv')
         expected = df_lanes
         pd.testing.assert_frame_equal(actual, expected)
 

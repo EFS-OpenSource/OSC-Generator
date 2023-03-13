@@ -1,7 +1,7 @@
 #  ****************************************************************************
 #  @coord_calculations.py
 #  
-#  @copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
+#  @copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
 #
 #  @license Apache v2.0
 #  
@@ -26,18 +26,21 @@ import numpy as np
 import warnings
 
 
-def transform_lanes_rel2abs_from_csv(df: pd.DataFrame) -> pd.DataFrame:
+def transform_lanes_rel2abs(df: pd.DataFrame, data_type: str) -> pd.DataFrame:
     """
     Transforms lane coordinates in absolut coordinate system
 
     Args:
         df: Input dataframe
+        data_type: Input file type (csv or osi)
 
     Returns:
         object (pd.DataFrame): Transformed dataframe
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError("input must be a pd.DataFrame")
+    if not isinstance(data_type, str):
+        raise TypeError("input must be a str")
 
     def find_curve(begin_x: float, begin_y: float, k: float, end_x: float) -> np.ndarray:
         """
@@ -90,25 +93,28 @@ def transform_lanes_rel2abs_from_csv(df: pd.DataFrame) -> pd.DataFrame:
     length = len(df.index) - 1
     df_crv = df.dropna(subset=['lin_right_beginn_x', 'lin_left_beginn_x'])
     length_crv = len(df_crv.index) - 1
-    points_right = find_curve(df_crv['lin_right_beginn_x'][length_crv],
-                            df_crv['lin_right_y_abstand'][length_crv],
-                            df_crv['lin_right_kruemm'][length_crv],
-                            df_crv['lin_right_ende_x'][length_crv])
+    if data_type == 'csv':
+        points_right = find_curve(df_crv['lin_right_beginn_x'][length_crv],
+                                df_crv['lin_right_y_abstand'][length_crv],
+                                df_crv['lin_right_kruemm'][length_crv],
+                                df_crv['lin_right_ende_x'][length_crv])
 
-    points_left = find_curve(df_crv['lin_left_beginn_x'][length_crv],
-                           df_crv['lin_left_y_abstand'][length_crv],
-                           df_crv['lin_left_kruemm'][length_crv],
-                           df_crv['lin_left_ende_x'][length_crv])
-    df_temp_1 = pd.DataFrame(columns=['lin_right_beginn_x'])
-    df_temp_1['lin_right_beginn_x'] = points_right[:, 0]
-    df_temp_1['lin_right_y_abstand'] = points_right[:, 1]
-    df_temp_2 = pd.DataFrame(columns=['lin_left_beginn_x'])
-    df_temp_2['lin_left_beginn_x'] = points_left[:, 0]
-    df_temp_2['lin_left_y_abstand'] = points_left[:, 1]
-    df_temp_1 = pd.concat([df_temp_1, df_temp_2], axis=1)
-    df_temp_1 = df_temp_1.dropna()
+        points_left = find_curve(df_crv['lin_left_beginn_x'][length_crv],
+                               df_crv['lin_left_y_abstand'][length_crv],
+                               df_crv['lin_left_kruemm'][length_crv],
+                               df_crv['lin_left_ende_x'][length_crv])
+        df_temp_1 = pd.DataFrame(columns=['lin_right_beginn_x'])
+        df_temp_1['lin_right_beginn_x'] = points_right[:, 0]
+        df_temp_1['lin_right_y_abstand'] = points_right[:, 1]
+        df_temp_2 = pd.DataFrame(columns=['lin_left_beginn_x'])
+        df_temp_2['lin_left_beginn_x'] = points_left[:, 0]
+        df_temp_2['lin_left_y_abstand'] = points_left[:, 1]
+        df_temp_1 = pd.concat([df_temp_1, df_temp_2], axis=1)
+        df_temp_1 = df_temp_1.dropna()
 
-    df = pd.concat([df, df_temp_1], ignore_index=True)
+        df = pd.concat([df, df_temp_1], ignore_index=True)
+    else:
+        pass
 
     geodetic = Geod(ellps='WGS84')
     r_lane_lat_list = []

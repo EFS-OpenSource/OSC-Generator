@@ -1,7 +1,7 @@
 #  ****************************************************************************
 #  @example.py
 #  
-#  @copyright 2022 Elektronische Fahrwerksysteme GmbH and Audi AG. All rights reserved.
+#  @copyright 2022 e:fs TechHub GmbH and Audi AG. All rights reserved.
 #
 #  @license Apache v2.0
 #  
@@ -21,7 +21,8 @@
 
 from osc_generator.osc_generator import OSCGenerator
 
-trajectories_path = r'tests\test_data\trajectories_file.csv'
+#trajectories_path = r'tests\test_data\trajectories_file.csv'
+trajectories_path = r'tests\test_data\trajectories_file.osi'
 opendrive_path = r'tests\test_data\2017-04-04_Testfeld_A9_Nord_offset.xodr'
 
 OSG = OSCGenerator()

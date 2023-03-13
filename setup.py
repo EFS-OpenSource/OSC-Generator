@@ -22,7 +22,7 @@ if os.path.isfile(file_path):
         lines = file.readlines()
         for idx, line in enumerate(lines):
             if line.startswith('version: '):
-                lines[idx] = 'version: ' + str(__version__) + '}\n'
+                lines[idx] = 'version: "' + str(__version__) + '"\n'
         file.seek(0)
         file.writelines(lines)
         file.truncate()
@@ -64,7 +64,7 @@ setup(name='osc_generator',
           "Bug Tracker": "https://github.com/EFS-OpenSource/OSC-Generator/issues",
           "Source Code": "https://github.com/EFS-OpenSource/OSC-Generator"},
       author='Axel Aigner et al.',
-      author_email='axel.aigner@efs-auto.com',
+      author_email='axel.aigner@efs-techhub.com',
       packages=find_packages(exclude=('tests',)),
       classifiers=[_f for _f in CLASSIFIERS.split('\n') if _f],
       python_requires='>=3.7',
