@@ -1,7 +1,14 @@
 # Description
 OSC-Generator is a collection of Python tools to generate [ASAM OpenSCENARIO](https://www.asam.net/standards/detail/openscenario/) files from vehicle data and an [ASAM OpenDRIVE](https://www.asam.net/standards/detail/opendrive/) file.
+
+![OSC-Workflow](docs/images/OSC-Generator_Interfaces.png)
+
+The generated openSCENARIO file (.xosc) can then be used in further applications, for example, visualised in a tool like [esmini](https://github.com/esmini/esmini).
+
+![openSCENARIO_visualisation_demo](docs/images/OSC-Generator_Demo.gif)
+
 ## Scope of Application
-Currently, OpenSCENARIO V1.0 and OpenDRIVE V1.4 are supported.
+Currently, OpenSCENARIO V1.2 and OpenDRIVE V1.4 are supported.
 Intersections may currently cause trouble but will be supported in a future release.
 All features are tested in Python 3.7 on Windows 10.
 
