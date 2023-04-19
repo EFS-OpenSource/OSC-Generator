@@ -26,6 +26,7 @@ from xml.etree.ElementTree import Element, SubElement
 from xml.etree import ElementTree
 from xml.dom import minidom
 from scenariogeneration import xosc
+from osc_generator.tools.user_config import UserConfig
 import datetime
 
 def write_pretty(elem: Element, output: str, use_folder: bool, timebased_lon: bool, timebased_lat: bool,
@@ -162,6 +163,11 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     opendrive_name = opendrive_path.split(os.path.sep)[-1]
     osgb_name = opendrive_name[:-4] + 'opt.osgb'
 
+    #Get User-defined parameters
+    user_param = UserConfig(dir_name)
+    user_param.read_config()
+    object_bb, object_bb_center = user_param.object_boundingbox, user_param.bbcenter_to_rear
+
     # Write Parameters
     param = xosc.ParameterDeclarations()
 
@@ -181,7 +187,24 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     egoname = "Ego"
 
     # vehicle
-    bb = xosc.BoundingBox(1.872, 4.924, 1.444, 1.376, 0, 0.722)  # dim(w, l, h), centre(x, y, z)
+    bb_input = []
+    if object_bb:
+        if object_bb[0] is not None and object_bb_center[0] is not None:
+            bb_input.extend([object_bb[0][0], object_bb[0][1], object_bb[0][2],
+                            object_bb_center[0][0], object_bb_center[0][1], object_bb_center[0][2]])
+        elif object_bb[0] is None and object_bb_center[0] is not None:
+            bb_input.extend([1.872, 4.924, 1.444,
+                             object_bb_center[0][0], object_bb_center[0][1], object_bb_center[0][2]])
+        elif object_bb[0] is not None and object_bb_center[0] is None:
+            bb_input.extend([object_bb[0][0], object_bb[0][1], object_bb[0][2],
+                             1.376, 0, 0.722])
+        else:
+            # default values
+            bb_input.extend([1.872, 4.924, 1.444, 1.376, 0, 0.722])
+    else:
+        bb_input.extend([1.872, 4.924, 1.444, 1.376, 0, 0.722])
+
+    bb = xosc.BoundingBox(*bb_input)  # dim(w, l, h), centre(x, y, z)
     fa = xosc.Axle(0.48, 0.684, 1.672, 2.91, 0.342)
     ra = xosc.Axle(0, 0.684, 1.672, 0, 0.342)
     ego_veh = xosc.Vehicle("car_white", xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
@@ -199,11 +222,27 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     entities.add_scenario_object(egoname, ego_veh, cont)
 
     # Entities - objects
+    bb_obj = []
     for idx, obj in objects.items():
         object_count = idx + 1
         objname = f"Player{object_count}"
         # vehicle
-        bb = xosc.BoundingBox(1.872, 4.924, 1.444, 1.376, 0, 0.722)  # dim(w, l, h), centre(x, y, z)
+        if len(object_bb) <= 1 or object_bb[object_count] is None and object_bb_center[object_count] is None:
+            # set default values
+            bb_obj.extend([1.872, 4.924, 1.444, 1.376, 0, 0.722])
+        elif object_bb[object_count] is None and object_bb_center[object_count] is not None:
+            bb_obj.extend([1.872, 4.924, 1.444,
+                           object_bb_center[object_count][0],
+                           object_bb_center[object_count][1],
+                           object_bb_center[object_count][2]])
+        elif object_bb[object_count] is not None and object_bb_center[object_count] is None:
+            bb_obj.extend([object_bb[object_count][0], object_bb[object_count][1], object_bb[object_count][2],
+                           1.376, 0, 0.722])
+        else:
+            bb_obj.extend([object_bb[object_count][0], object_bb[object_count][1], object_bb[object_count][2],
+              object_bb_center[object_count][0], object_bb_center[object_count][1], object_bb_center[object_count][2]])
+
+        bb = xosc.BoundingBox(*bb_obj)  # dim(w, l, h), centre(x, y, z)
         fa = xosc.Axle(0.48, 0.684, 1.672, 2.91, 0.342)
         ra = xosc.Axle(0, 0.684, 1.672, 0, 0.342)
         obj_veh = xosc.Vehicle(objlist[idx], xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
@@ -226,7 +265,6 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     # init storyboard object
     sb = xosc.StoryBoard(init)
 
-    # print(objects)
     # Start (init) conditions objects
     for idx, obj in objects.items():
         object_count = idx + 1
