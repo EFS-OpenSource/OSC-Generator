@@ -172,7 +172,10 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     param = xosc.ParameterDeclarations()
 
     # Write catalogs
-    catalog_path = "../Catalogs/Vehicles"
+    if user_param.catalogs is not None:
+        catalog_path = user_param.catalogs
+    else:
+        catalog_path = "../Catalogs/Vehicles"
     catalog = xosc.Catalog()
     catalog.add_catalog("VehicleCatalog", catalog_path)
 
@@ -219,7 +222,12 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     prop.add_property(name="sex", value="male")
     cont = xosc.Controller("DefaultDriver", prop)
 
-    entities.add_scenario_object(egoname, ego_veh, cont)
+    if user_param.catalogs:
+        entities.add_scenario_object(
+            egoname, xosc.CatalogReference("VehicleCatalog", "car_blue")
+        )
+    else:
+        entities.add_scenario_object(egoname, ego_veh, cont)
 
     # Entities - objects
     bb_obj = []
@@ -249,7 +257,12 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         obj_veh.add_property(name="control", value="internal")
         obj_veh.add_property_file("")
 
-        entities.add_scenario_object(objname, obj_veh, cont)
+        if user_param.catalogs:
+            entities.add_scenario_object(
+                objname, xosc.CatalogReference("VehicleCatalog", "car_white")
+            )
+        else:
+            entities.add_scenario_object(objname, obj_veh, cont)
 
     # Write Init
     init = xosc.Init()

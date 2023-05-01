@@ -41,6 +41,7 @@ def get_user_defined_attributes(osi_message, path):
 
     dir_name = os.path.dirname(path)
     user_config = UserConfig(dir_name)
+    user_config.read_config()
     user_config.object_boundingbox = bb_dimension
     user_config.bbcenter_to_rear = bb_center
     user_config.write_config()

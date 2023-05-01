@@ -19,7 +19,9 @@
 #  ****************************************************************************
 
 import os
+
 from .tools.converter import Converter
+from .tools.user_config import UserConfig
 import sys
 from argparse import ArgumentParser
 from .version import __version__
@@ -35,7 +37,8 @@ class OSCGenerator:
     def __init__(self):
         self.converter: Converter = Converter()
 
-    def generate_osc(self, trajectories_path: str, opendrive_path: str, output_scenario_path: str = None):
+    def generate_osc(self, trajectories_path: str, opendrive_path: str, output_scenario_path: str = None,
+                     **kwargs: str):
         """
         This method generates a OpenSCENARIO file based on trajectories and an OpenDRIVE file.
 
@@ -44,8 +47,16 @@ class OSCGenerator:
             opendrive_path: Path to the OpenDRIVE file which describes the road net which the objects are using
             output_scenario_path: Output file path and name. If not specified, a directory and name will be chosen.
                 If the file already exists, it will be overwritten.
+            keyword arguments:
+                catalog_path: Path to the catalog file containing vehicle catalog information for the output scenario
 
         """
+        if "catalog_path" in kwargs:
+            dir_name = os.path.dirname(trajectories_path)
+            user_config = UserConfig(dir_name)
+            user_config.catalogs = kwargs["catalog_path"]
+            user_config.write_config()
+
         if output_scenario_path:
             self.converter.set_paths(trajectories_path, opendrive_path, output_scenario_path)
         else:
@@ -72,6 +83,9 @@ def main():
     parser.add_argument("-s", "--openscenario", dest="output_scenario_path", default=None,
                         help="output file path and name. If not specified, a directory and name will be chosen. "
                              "If the file already exists , it will be overwritten.")
+    parser.add_argument("-c", "--catalog", dest="catalog_path", default=None,
+                        help="catalog file path and name. If not specified, a default catalog path is used. ")
+
     try:
         args = parser.parse_args()
     except SystemExit as err:
@@ -82,7 +96,7 @@ def main():
         parser.print_help()
         return
     oscg = OSCGenerator()
-    oscg.generate_osc(args.trajectories_path, args.opendrive_path, args.output_scenario_path)
+    oscg.generate_osc(args.trajectories_path, args.opendrive_path, args.output_scenario_path, args.catalog_path)
 
 
 if __name__ == '__main__':

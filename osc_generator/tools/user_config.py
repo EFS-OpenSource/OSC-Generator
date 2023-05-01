@@ -39,6 +39,9 @@ class UserConfig:
                     self.object_boundingbox = object_bb
                     self.bbcenter_to_rear = object_bbcenter
 
+                if "catalogs" in data:
+                    self.catalogs = data["catalogs"]
+
         except FileNotFoundError:
             warnings.warn("User configuration file unavailable. ", UserWarning)
 
@@ -46,19 +49,17 @@ class UserConfig:
         """
         write config file from relevant information
         """
-
+        config_data = {}
         if self.object_boundingbox is not None and self.bbcenter_to_rear is not None:
-            config_data = {
-                "moving_objects": [{'boundingbox': self.object_boundingbox[i],
-                                    'bbcenter_to_rear': self.bbcenter_to_rear[i]}
-                                   for i in range(len(self.object_boundingbox))]
-            }
-        else:
-            config_data = None
+            config_data["moving_objects"] = [{'boundingbox': self.object_boundingbox[i],
+                                              'bbcenter_to_rear': self.bbcenter_to_rear[i]}
+                                             for i in range(len(self.object_boundingbox))]
+        if self.catalogs is not None:
+            config_data["catalogs"] = self.catalogs
 
-        if config_data is not None:
+        if config_data:
             try:
                 with open(os.path.join(self.path_to_config, 'user_config.json'), 'w') as config_file:
-                    json.dump(config_data, config_file)
+                    json.dump(config_data, config_file, indent=4)
             except:
                 warnings.warn("Unable to write config file", UserWarning)
