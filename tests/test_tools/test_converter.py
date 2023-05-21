@@ -71,7 +71,10 @@ class TestConverter:
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
-            warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
+            warnings.warn(
+                "Feature OSI Input Data is not available. Download from: "
+                "https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py",
+                UserWarning)
 
 
     def test_converter_csv_absolute_ego_llc(self, test_data_dir, df_lanes):  # left lane change, absolute co-ords
@@ -113,14 +116,20 @@ class TestConverter:
         opendrive_path = os.path.join(test_data_dir, r'TestTrack.xodr')
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_rlc.xosc')
-        system_under_test = Converter()
-        system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
-        system_under_test.process_trajectories(relative=True)
-        system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
-        system_under_test.write_scenario(plot=False,
-                                         radius_pos_trigger=2.0,
-                                         timebased_lon=True,
-                                         timebased_lat=True,
-                                         output='xosc')
-        diff = main.diff_files(output_scenario_path, expected_scenario_path)
-        assert [] == diff
+        try:
+            system_under_test = Converter()
+            system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.process_trajectories(relative=True)
+            system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
+            system_under_test.write_scenario(plot=False,
+                                             radius_pos_trigger=2.0,
+                                             timebased_lon=True,
+                                             timebased_lat=True,
+                                             output='xosc')
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+        except NameError:
+            warnings.warn(
+                "Feature OSI Input Data is not available. Download from: "
+                "https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py",
+                UserWarning)
