@@ -20,6 +20,7 @@
 
 from osc_generator.osc_generator import OSCGenerator
 from xmldiff import main
+import pandas as pd
 import pytest
 import os
 import warnings
@@ -101,3 +102,26 @@ class TestOSCGenerator:
         system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
+
+    def test_generate_osc_straight_csv(self, test_data_dir):
+        trajectories_path = os.path.join(test_data_dir, r'testfile_straight.csv')
+        opendrive_path = os.path.join(test_data_dir, r'TestTrack.xodr')
+        output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+        expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
+        system_under_test = OSCGenerator()
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        diff = main.diff_files(output_scenario_path, expected_scenario_path)
+        assert [] == diff
+
+    def test_generate_osc_straight_osi(self, test_data_dir):
+        trajectories_path = os.path.join(test_data_dir, r'testfile_straight.osi')
+        opendrive_path = os.path.join(test_data_dir, r'TestTrack.xodr')
+        output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+        expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
+        try:
+            system_under_test = OSCGenerator()
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+        except NameError:
+            warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
