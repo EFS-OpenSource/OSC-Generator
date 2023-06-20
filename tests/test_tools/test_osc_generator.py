@@ -38,7 +38,7 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
         
@@ -48,10 +48,10 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
 
@@ -62,10 +62,10 @@ class TestOSCGenerator:
             output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
             expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
             system_under_test = OSCGenerator()
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
@@ -80,10 +80,10 @@ class TestOSCGenerator:
             output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
             expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
             system_under_test = OSCGenerator()
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
@@ -96,10 +96,10 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
 
@@ -109,7 +109,7 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
 
@@ -120,7 +120,7 @@ class TestOSCGenerator:
         expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
         try:
             system_under_test = OSCGenerator()
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
