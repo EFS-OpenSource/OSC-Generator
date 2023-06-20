@@ -49,13 +49,19 @@ class OSCGenerator:
                 If the file already exists, it will be overwritten.
             keyword arguments:
                 catalog_path: Path to the catalog file containing vehicle catalog information for the output scenario
+                osc_version: Desired version of the output OpenScenario file. Default is OSC V1.0
 
         """
         if "catalog_path" in kwargs:
-            dir_name = os.path.dirname(trajectories_path)
-            user_config = UserConfig(dir_name)
-            user_config.catalogs = kwargs["catalog_path"]
-            user_config.write_config()
+            if kwargs["catalog_path"] is not None:
+                dir_name = os.path.dirname(trajectories_path)
+                user_config = UserConfig(dir_name)
+                user_config.catalogs = kwargs["catalog_path"]
+                user_config.write_config()
+
+        if "osc_version" in kwargs:
+            if kwargs["osc_version"] is not None:
+                self.converter.osc_version = kwargs["osc_version"]
 
         if output_scenario_path:
             self.converter.set_paths(trajectories_path, opendrive_path, output_scenario_path)
@@ -85,6 +91,8 @@ def main():
                              "If the file already exists , it will be overwritten.")
     parser.add_argument("-c", "--catalog", dest="catalog_path", default=None,
                         help="catalog file path and name. If not specified, a default catalog path is used. ")
+    parser.add_argument("-oscv", "--oscversion", dest="osc_version", default=None,
+                        help="Desired version of the output OpenScenario file. If not specified, default is OSC V1.0 ")
 
     try:
         args = parser.parse_args()
@@ -96,7 +104,9 @@ def main():
         parser.print_help()
         return
     oscg = OSCGenerator()
-    oscg.generate_osc(args.trajectories_path, args.opendrive_path, args.output_scenario_path, args.catalog_path)
+    oscg.generate_osc(args.trajectories_path, args.opendrive_path, args.output_scenario_path,
+                      catalog_path=args.catalog_path,
+                      osc_version=args.osc_version)
 
 
 if __name__ == '__main__':

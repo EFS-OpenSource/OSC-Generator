@@ -210,7 +210,10 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
     bb = xosc.BoundingBox(*bb_input)  # dim(w, l, h), centre(x, y, z)
     fa = xosc.Axle(0.48, 0.684, 1.672, 2.91, 0.342)
     ra = xosc.Axle(0, 0.684, 1.672, 0, 0.342)
-    ego_veh = xosc.Vehicle("car_white", xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
+    if float(osc_version) < 1.1:
+        ego_veh = xosc.Vehicle("car_white", xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5)
+    else:
+        ego_veh = xosc.Vehicle("car_white", xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
     ego_veh.add_property(name="control", value="external")
     ego_veh.add_property_file("")
     # entity controller
@@ -251,9 +254,13 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
               object_bb_center[object_count][0], object_bb_center[object_count][1], object_bb_center[object_count][2]])
 
         bb = xosc.BoundingBox(*bb_obj)  # dim(w, l, h), centre(x, y, z)
+        bb_obj.clear()
         fa = xosc.Axle(0.48, 0.684, 1.672, 2.91, 0.342)
         ra = xosc.Axle(0, 0.684, 1.672, 0, 0.342)
-        obj_veh = xosc.Vehicle(objlist[idx], xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
+        if float(osc_version) < 1.1:
+            obj_veh = xosc.Vehicle(objlist[idx], xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5)
+        else:
+            obj_veh = xosc.Vehicle(objlist[idx], xosc.VehicleCategory.car, bb, fa, ra, 67, 10, 9.5, 1700)
         obj_veh.add_property(name="control", value="internal")
         obj_veh.add_property_file("")
 
@@ -263,6 +270,12 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
             )
         else:
             entities.add_scenario_object(objname, obj_veh, cont)
+
+    # Determine Priority attribute according to osc version
+    if float(osc_version) <= 1.1:
+        xosc_priority = xosc.Priority.overwrite
+    else:
+        xosc_priority = xosc.Priority.override
 
     # Write Init
     init = xosc.Init()
@@ -324,7 +337,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
             if not standstill:
                 ## Long maneuvers without move_in, move_out
-                event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.override)
+                event = xosc.Event(f'New Event {eventcounter}', priority=xosc_priority)
 
                 # Starting Condition of long maneuvers
                 if timebased_lon:
@@ -357,7 +370,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 standstill = False
 
                 # Maneuver: change speed by absolute elapsed simulation time trigger
-                event = xosc.Event(f'New Event {eventcounter}', priority=xosc.Priority.override)
+                event = xosc.Event(f'New Event {eventcounter}', priority=xosc_priority)
 
                 trig_cond = xosc.SimulationTimeCondition(value=float(ego_maneuver[0]) / 10, rule=xosc.Rule.greaterThan)
                 trigger = xosc.ValueTrigger(name=f'Start Condition of Event {eventcounter}', delay=0,
@@ -385,7 +398,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
                 raise ValueError('Lane change maneuver name is wrong')
 
             # Lane Change
-            event = xosc.Event(f'New Event {eventcounter}', xosc.Priority.override)
+            event = xosc.Event(f'New Event {eventcounter}', priority=xosc_priority)
 
             # Starting Condition of lane change
             if timebased_lat:
@@ -426,6 +439,9 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
 
     # Create Scenario
     sb.add_story(story)
+
+    osc_minor_version = int(osc_version.split('.')[-1])
+
     scenario = xosc.Scenario(
         "",
         "OSC Generator",
@@ -435,7 +451,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         road,
         catalog,
         creation_date=datetime.datetime(2023, 1, 1, 0, 0, 0, 0),
-        osc_minor_version=2
+        osc_minor_version=osc_minor_version
     )
 
     # Create Output Path
