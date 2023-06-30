@@ -275,8 +275,8 @@ def create_lateral_maneuver_vectors(df_lanes: pd.DataFrame, lat: pd.core.series.
             xs = []
             ys = []
         elif isinstance(intersection, MultiPoint):
-            xs = [point.x for point in intersection]
-            ys = [point.y for point in intersection]
+            xs = [point.x for point in intersection.geoms]
+            ys = [point.y for point in intersection.geoms]
         else:
             xs = [intersection.x]
             ys = [intersection.y]
