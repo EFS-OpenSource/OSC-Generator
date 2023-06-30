@@ -448,6 +448,41 @@
                             </StartTrigger>
                         </Event>
                     </Maneuver>
+                    <Maneuver name="New Maneuver 2">
+                        <ParameterDeclarations/>
+                        <Event name="New Event 9" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_INF_lane_change_right">
+                                <PrivateAction>
+                                    <LateralAction>
+                                        <LaneChangeAction targetLaneOffset="4.26961e-316">
+                                            <LaneChangeActionDynamics dynamicsShape="sinusoidal" value="4.7" dynamicsDimension="time"/>
+                                            <LaneChangeTarget>
+                                                <RelativeTargetLane value="-1" entityRef="Player1"/>
+                                            </LaneChangeTarget>
+                                        </LaneChangeAction>
+                                    </LateralAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 9" delay="0.0" conditionEdge="rising">
+                                        <ByEntityCondition>
+                                            <TriggeringEntities triggeringEntitiesRule="any">
+                                                <EntityRef entityRef="Player1"/>
+                                            </TriggeringEntities>
+                                            <EntityCondition>
+                                                <DistanceCondition value="2.0" freespace="false" rule="lessThan" relativeDistanceType="longitudinal" coordinateSystem="road">
+                                                    <Position>
+                                                        <WorldPosition x="4534365.558931728" y="-3785765.2705756347" z="0.0" h="0.0" p="0.0" r="0.0"/>
+                                                    </Position>
+                                                </DistanceCondition>
+                                            </EntityCondition>
+                                        </ByEntityCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                    </Maneuver>
                 </ManeuverGroup>
                 <StartTrigger>
                     <ConditionGroup>
