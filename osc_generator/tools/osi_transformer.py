@@ -2,11 +2,49 @@ import struct
 import pandas as pd
 import math
 import warnings
+from osc_generator.tools.user_config import UserConfig
+import os
 
 try:
     from osc_generator.tools.OSI.OSITrace import OSITrace
 except ImportError:
     warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
+
+def get_user_defined_attributes(osi_message, path):
+    """
+    Obtain user defined attributes from the OSI message.
+    Writes to config file
+
+    :param :
+        osi_message: the initial message from the OSI file
+        path: for directory in which to write config file
+    """
+    bb_dimension = []
+    bb_center = []
+    for obj in osi_message.global_ground_truth.moving_object:
+        if obj.base.HasField('dimension'):
+                # object bounding box dimensions
+                bb_dimension.append([obj.base.dimension.width, obj.base.dimension.length, obj.base.dimension.height])
+        else:
+            bb_dimension.append(None)
+
+        if obj.HasField('vehicle_attributes'):
+            if obj.vehicle_attributes.HasField('bbcenter_to_rear'):
+                # object bounding box center point, from rear axle
+                bb_center.append([obj.vehicle_attributes.bbcenter_to_rear.x,
+                                  obj.vehicle_attributes.bbcenter_to_rear.y,
+                                  obj.vehicle_attributes.bbcenter_to_rear.z])
+            else:
+                bb_center.append(None)
+        else:
+            bb_center.append(None)
+
+    dir_name = os.path.dirname(path)
+    user_config = UserConfig(dir_name)
+    user_config.read_config()
+    user_config.object_boundingbox = bb_dimension
+    user_config.bbcenter_to_rear = bb_center
+    user_config.write_config()
 
 
 def osi2df(path: str) -> pd.DataFrame:
@@ -24,6 +62,8 @@ def osi2df(path: str) -> pd.DataFrame:
     messages = trace.get_messages()
     m = trace.get_message_by_index(0)
     number_of_vehicles = len(m.global_ground_truth.moving_object)
+
+    get_user_defined_attributes(m, path)
 
     lists: list = [[] for _ in range(15)]
     for i in messages:

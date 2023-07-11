@@ -72,6 +72,36 @@
                 </Controller>
             </ObjectController>
         </ScenarioObject>
+        <ScenarioObject name="Player2">
+            <Vehicle name="CarClass1" vehicleCategory="car" mass="1700.0">
+                <ParameterDeclarations/>
+                <BoundingBox>
+                    <Center x="1.376" y="0.0" z="0.722"/>
+                    <Dimensions width="1.872" length="4.924" height="1.444"/>
+                </BoundingBox>
+                <Performance maxSpeed="67.0" maxDeceleration="9.5" maxAcceleration="10.0"/>
+                <Axles>
+                    <FrontAxle maxSteering="0.48" wheelDiameter="0.684" trackWidth="1.672" positionX="2.91" positionZ="0.342"/>
+                    <RearAxle maxSteering="0.0" wheelDiameter="0.684" trackWidth="1.672" positionX="0.0" positionZ="0.342"/>
+                </Axles>
+                <Properties>
+                    <Property name="control" value="internal"/>
+                    <File filepath=""/>
+                </Properties>
+            </Vehicle>
+            <ObjectController>
+                <Controller name="DefaultDriver">
+                    <ParameterDeclarations/>
+                    <Properties>
+                        <Property name="weight" value="60"/>
+                        <Property name="height" value="1.8"/>
+                        <Property name="eyeDistance" value="0.065"/>
+                        <Property name="age" value="28"/>
+                        <Property name="sex" value="male"/>
+                    </Properties>
+                </Controller>
+            </ObjectController>
+        </ScenarioObject>
     </Entities>
     <Storyboard>
         <Init>
@@ -80,7 +110,7 @@
                     <PrivateAction>
                         <TeleportAction>
                             <Position>
-                                <WorldPosition x="3728.331392794964" y="-17465.94162228238" z="0.0" h="7.663740745507101" p="0.0" r="0.0"/>
+                                <WorldPosition x="3600.245579247712" y="-10479.74558023177" z="0.0" h="7.794640439406676" p="0.0" r="0.0"/>
                             </Position>
                         </TeleportAction>
                     </PrivateAction>
@@ -99,7 +129,7 @@
                     <PrivateAction>
                         <TeleportAction>
                             <Position>
-                                <WorldPosition x="inf" y="inf" z="0.0" h="nan" p="0.0" r="0.0"/>
+                                <WorldPosition x="3603.3332028188743" y="-10441.297258334234" z="0.0" h="7.794467836138277" p="0.0" r="0.0"/>
                             </Position>
                         </TeleportAction>
                     </PrivateAction>
@@ -108,7 +138,26 @@
                             <SpeedAction>
                                 <SpeedActionDynamics dynamicsShape="step" value="0.0" dynamicsDimension="rate"/>
                                 <SpeedActionTarget>
-                                    <AbsoluteTargetSpeed value="nan"/>
+                                    <AbsoluteTargetSpeed value="34.65277777777778"/>
+                                </SpeedActionTarget>
+                            </SpeedAction>
+                        </LongitudinalAction>
+                    </PrivateAction>
+                </Private>
+                <Private entityRef="Player2">
+                    <PrivateAction>
+                        <TeleportAction>
+                            <Position>
+                                <WorldPosition x="3597.79170384194" y="-10464.856124317273" z="0.0" h="7.766617713046452" p="0.0" r="0.0"/>
+                            </Position>
+                        </TeleportAction>
+                    </PrivateAction>
+                    <PrivateAction>
+                        <LongitudinalAction>
+                            <SpeedAction>
+                                <SpeedActionDynamics dynamicsShape="step" value="0.0" dynamicsDimension="rate"/>
+                                <SpeedActionTarget>
+                                    <AbsoluteTargetSpeed value="30.52777777777778"/>
                                 </SpeedActionTarget>
                             </SpeedAction>
                         </LongitudinalAction>
@@ -215,11 +264,250 @@
                     <Maneuver name="New Maneuver 2">
                         <ParameterDeclarations/>
                         <Event name="New Event 1" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_keep_velocity">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.03968253968254081" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="34.625"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 1" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="0.0" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 2" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_decelerate">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.3624131944444464" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="33.43055555555555"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 2" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="0.7" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 3" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_keep_velocity">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.052083333333339255" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="33.36111111111111"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 3" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="3.9" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 4" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_decelerate">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.625" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="31.15277777777778"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 4" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="4.7" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 5" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_keep_velocity">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.04340277777777679" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="31.1875"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 5" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="8.2" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 6" priority="override" maximumExecutionCount="1">
                             <Action name="FM_EGO_accelerate">
                                 <PrivateAction>
                                     <LongitudinalAction>
                                         <SpeedAction>
-                                            <SpeedActionDynamics dynamicsShape="linear" value="0.44444444444443576" dynamicsDimension="rate"/>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.5000000000000071" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="31.430555555555557"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 6" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="9.0" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 7" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_keep_velocity">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.06944444444444997" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="31.36111111111111"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 7" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="9.5" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                        <Event name="New Event 8" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_accelerate">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.18518518518517862" dynamicsDimension="rate"/>
+                                            <SpeedActionTarget>
+                                                <AbsoluteTargetSpeed value="31.416666666666664"/>
+                                            </SpeedActionTarget>
+                                        </SpeedAction>
+                                    </LongitudinalAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 8" delay="0.0" conditionEdge="rising">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="9.9" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                    </Maneuver>
+                    <Maneuver name="New Maneuver 2">
+                        <ParameterDeclarations/>
+                        <Event name="New Event 9" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_INF_lane_change_right">
+                                <PrivateAction>
+                                    <LateralAction>
+                                        <LaneChangeAction targetLaneOffset="4.26961e-316">
+                                            <LaneChangeActionDynamics dynamicsShape="sinusoidal" value="4.7" dynamicsDimension="time"/>
+                                            <LaneChangeTarget>
+                                                <RelativeTargetLane value="-1" entityRef="Player1"/>
+                                            </LaneChangeTarget>
+                                        </LaneChangeAction>
+                                    </LateralAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="Start Condition of Event 9" delay="0.0" conditionEdge="rising">
+                                        <ByEntityCondition>
+                                            <TriggeringEntities triggeringEntitiesRule="any">
+                                                <EntityRef entityRef="Player1"/>
+                                            </TriggeringEntities>
+                                            <EntityCondition>
+                                                <DistanceCondition value="2.0" freespace="false" rule="lessThan" relativeDistanceType="longitudinal" coordinateSystem="road">
+                                                    <Position>
+                                                        <WorldPosition x="4534365.558931728" y="-3785765.2705756347" z="0.0" h="0.0" p="0.0" r="0.0"/>
+                                                    </Position>
+                                                </DistanceCondition>
+                                            </EntityCondition>
+                                        </ByEntityCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                    </Maneuver>
+                </ManeuverGroup>
+                <StartTrigger>
+                    <ConditionGroup>
+                        <Condition name="Start Condition of Act 2" delay="0.0" conditionEdge="rising">
+                            <ByValueCondition>
+                                <SimulationTimeCondition value="0.0" rule="greaterThan"/>
+                            </ByValueCondition>
+                        </Condition>
+                    </ConditionGroup>
+                </StartTrigger>
+                <StopTrigger/>
+            </Act>
+            <Act name="New Act 3">
+                <ManeuverGroup name="New Sequence 3" maximumExecutionCount="1">
+                    <Actors selectTriggeringEntities="false">
+                        <EntityRef entityRef="Player2"/>
+                    </Actors>
+                    <Maneuver name="New Maneuver 3">
+                        <ParameterDeclarations/>
+                        <Event name="New Event 1" priority="override" maximumExecutionCount="1">
+                            <Action name="FM_EGO_accelerate">
+                                <PrivateAction>
+                                    <LongitudinalAction>
+                                        <SpeedAction>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.44444444444444287" dynamicsDimension="rate"/>
                                             <SpeedActionTarget>
                                                 <AbsoluteTargetSpeed value="30.75"/>
                                             </SpeedActionTarget>
@@ -231,7 +519,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 1" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="6.3" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="0.0" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -254,7 +542,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 2" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="6.8" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="0.5" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -265,9 +553,9 @@
                                 <PrivateAction>
                                     <LongitudinalAction>
                                         <SpeedAction>
-                                            <SpeedActionDynamics dynamicsShape="linear" value="0.31250000000001776" dynamicsDimension="rate"/>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.3125000000000089" dynamicsDimension="rate"/>
                                             <SpeedActionTarget>
-                                                <AbsoluteTargetSpeed value="30.68055555555556"/>
+                                                <AbsoluteTargetSpeed value="30.680555555555557"/>
                                             </SpeedActionTarget>
                                         </SpeedAction>
                                     </LongitudinalAction>
@@ -277,7 +565,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 3" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="7.2" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="0.9" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -300,7 +588,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 4" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="7.6" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="1.3" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -323,7 +611,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 5" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="8.2" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="1.9" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -334,9 +622,9 @@
                                 <PrivateAction>
                                     <LongitudinalAction>
                                         <SpeedAction>
-                                            <SpeedActionDynamics dynamicsShape="linear" value="0.23148148148146439" dynamicsDimension="rate"/>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.23148148148147624" dynamicsDimension="rate"/>
                                             <SpeedActionTarget>
-                                                <AbsoluteTargetSpeed value="30.60416666666666"/>
+                                                <AbsoluteTargetSpeed value="30.604166666666664"/>
                                             </SpeedActionTarget>
                                         </SpeedAction>
                                     </LongitudinalAction>
@@ -346,7 +634,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 6" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="9.3" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="3.0" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -357,7 +645,7 @@
                                 <PrivateAction>
                                     <LongitudinalAction>
                                         <SpeedAction>
-                                            <SpeedActionDynamics dynamicsShape="linear" value="0.029761904761913222" dynamicsDimension="rate"/>
+                                            <SpeedActionDynamics dynamicsShape="linear" value="0.0" dynamicsDimension="rate"/>
                                             <SpeedActionTarget>
                                                 <AbsoluteTargetSpeed value="30.625"/>
                                             </SpeedActionTarget>
@@ -369,7 +657,7 @@
                                 <ConditionGroup>
                                     <Condition name="Start Condition of Event 7" delay="0.0" conditionEdge="rising">
                                         <ByValueCondition>
-                                            <SimulationTimeCondition value="9.5" rule="greaterThan"/>
+                                            <SimulationTimeCondition value="3.3" rule="greaterThan"/>
                                         </ByValueCondition>
                                     </Condition>
                                 </ConditionGroup>
@@ -379,7 +667,7 @@
                 </ManeuverGroup>
                 <StartTrigger>
                     <ConditionGroup>
-                        <Condition name="Start Condition of Act 2" delay="0.0" conditionEdge="rising">
+                        <Condition name="Start Condition of Act 3" delay="0.0" conditionEdge="rising">
                             <ByValueCondition>
                                 <SimulationTimeCondition value="0.0" rule="greaterThan"/>
                             </ByValueCondition>

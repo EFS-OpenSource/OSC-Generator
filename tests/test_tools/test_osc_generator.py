@@ -20,6 +20,7 @@
 
 from osc_generator.osc_generator import OSCGenerator
 from xmldiff import main
+import pandas as pd
 import pytest
 import os
 import warnings
@@ -37,7 +38,7 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
         
@@ -47,10 +48,10 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
 
@@ -59,12 +60,12 @@ class TestOSCGenerator:
             trajectories_path = os.path.join(test_data_dir, r'trajectories_file.osi')
             opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
             output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
-            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
+            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario_osi.xosc')
             system_under_test = OSCGenerator()
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
@@ -77,12 +78,12 @@ class TestOSCGenerator:
             trajectories_path = os.path.join(test_data_dir, r'trajectories_file.osi')
             opendrive_path = os.path.join(test_data_dir, r'2017-04-04_Testfeld_A9_Nord_offset.xodr')
             output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
-            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
+            expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario_osi.xosc')
             system_under_test = OSCGenerator()
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
-            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
             diff = main.diff_files(output_scenario_path, expected_scenario_path)
             assert [] == diff
         except NameError:
@@ -95,9 +96,32 @@ class TestOSCGenerator:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_scenario.xosc')
         system_under_test = OSCGenerator()
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
-        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path)
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
         diff = main.diff_files(output_scenario_path, expected_scenario_path)
         assert [] == diff
+
+    def test_generate_osc_straight_csv(self, test_data_dir):
+        trajectories_path = os.path.join(test_data_dir, r'testfile_straight.csv')
+        opendrive_path = os.path.join(test_data_dir, r'TestTrack.xodr')
+        output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+        expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
+        system_under_test = OSCGenerator()
+        system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
+        diff = main.diff_files(output_scenario_path, expected_scenario_path)
+        assert [] == diff
+
+    def test_generate_osc_straight_osi(self, test_data_dir):
+        trajectories_path = os.path.join(test_data_dir, r'testfile_straight.osi')
+        opendrive_path = os.path.join(test_data_dir, r'TestTrack.xodr')
+        output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
+        expected_scenario_path = os.path.join(test_data_dir, r'expected_straight.xosc')
+        try:
+            system_under_test = OSCGenerator()
+            system_under_test.generate_osc(trajectories_path, opendrive_path, output_scenario_path, osc_version="1.2")
+            diff = main.diff_files(output_scenario_path, expected_scenario_path)
+            assert [] == diff
+        except NameError:
+            warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
