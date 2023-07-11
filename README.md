@@ -46,13 +46,13 @@ All features are tested in Python 3.7 on Windows 10.
 - CLI arguments
   - the following table outlines the available input arguments
       
-   | Argument | Type     | Default Value | Description | 
-   |----------|----------|--------------|--------------------------------------------------------------------|
-   | "-t", "--trajectories" | required | N/A | Path to the file containing the object trajectories used as input |
-   | "-d", "--opendrive" | required | N/A | Path to the opendrive file which describes the road net which the objects are using |
-   | "-s", "--openscenario" | optional | "None" | Output file path and name. If not specified, a directory and name will be chosen. If the file already exists , it will be overwritten |
-   | "-v", "--version"| optional | N/A | Show program's version number and exit |
-   | "-c", "--catalog" | optional | "None" | Catalog file path and name. If not specified, a default catalog path is used |
+   | Argument                | Type | Default Value | Description | 
+   |-----|----------|--------------|--------------------------------------------------------------------|
+   | "-t", "--trajectories"  | required | N/A | Path to the file containing the object trajectories used as input |
+   | "-d", "--opendrive"     | required | N/A | Path to the opendrive file which describes the road net which the objects are using |
+   | "-s", "--openscenario"  | optional | "None" | Output file path and name. If not specified, a directory and name will be chosen. If the file already exists , it will be overwritten |
+   | "-v", "--version"       | optional | N/A | Show program's version number and exit |
+   | "-cat", "--catalog"      | optional | "None" | Catalog file path and name. If not specified, a default catalog path is used |
    | "-oscv", "--oscversion" | optional | "None" | Desired version of the output OpenScenario file. If not specified, default is OSC V1.0 |
 
 
