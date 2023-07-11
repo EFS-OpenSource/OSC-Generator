@@ -89,7 +89,7 @@ def main():
     parser.add_argument("-s", "--openscenario", dest="output_scenario_path", default=None,
                         help="output file path and name. If not specified, a directory and name will be chosen. "
                              "If the file already exists , it will be overwritten.")
-    parser.add_argument("-c", "--catalog", dest="catalog_path", default=None,
+    parser.add_argument("-cat", "--catalog", dest="catalog_path", default=None,
                         help="catalog file path and name. If not specified, a default catalog path is used. ")
     parser.add_argument("-oscv", "--oscversion", dest="osc_version", default=None,
                         help="Desired version of the output OpenScenario file. If not specified, default is OSC V1.0 ")
