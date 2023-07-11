@@ -102,10 +102,10 @@ class Converter:
         data_type = ''
         if self.trajectories_path.endswith(".csv"):
             df = pd.read_csv(self.trajectories_path)
-            data_type == 'csv'
+            data_type = 'csv'
         elif self.trajectories_path.endswith(".osi"):
             df = osi2df(self.trajectories_path)
-            data_type == 'osi'
+            data_type = 'osi'
 
         if relative:
             # Delete not relevant objects (too far away, not visible long enough, not plausible)
