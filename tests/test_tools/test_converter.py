@@ -42,6 +42,7 @@ class TestConverter:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_llc.xosc')
         system_under_test = Converter()
+        system_under_test.osc_version = '1.2'
         system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
         system_under_test.process_trajectories(relative=True)
         system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
@@ -60,6 +61,7 @@ class TestConverter:
         expected_scenario_path = os.path.join(test_data_dir, r'expected_llc.xosc')
         try:
             system_under_test = Converter()
+            system_under_test.osc_version = '1.2'
             system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
             system_under_test.process_trajectories(relative=True)
             system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
@@ -83,6 +85,7 @@ class TestConverter:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_llc.xosc')
         system_under_test = Converter()
+        system_under_test.osc_version = '1.2'
         system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
         system_under_test.process_trajectories(relative=False, df_lanes=df_lanes)
         system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
@@ -100,6 +103,7 @@ class TestConverter:
         output_scenario_path = os.path.join(test_data_dir, r'output_scenario.xosc')
         expected_scenario_path = os.path.join(test_data_dir, r'expected_rlc.xosc')
         system_under_test = Converter()
+        system_under_test.osc_version = '1.2'
         system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
         system_under_test.process_trajectories(relative=True)
         system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
@@ -118,6 +122,7 @@ class TestConverter:
         expected_scenario_path = os.path.join(test_data_dir, r'expected_rlc.xosc')
         try:
             system_under_test = Converter()
+            system_under_test.osc_version = '1.2'
             system_under_test.set_paths(trajectories_path, opendrive_path, output_scenario_path)
             system_under_test.process_trajectories(relative=True)
             system_under_test.label_maneuvers(acc_threshold=0.2, optimize_acc=False, generate_kml=False)
