@@ -113,6 +113,8 @@ All features are tested in Python 3.7 on Windows 10.
 
 ## Citation
 An associated [paper](https://ieeexplore.ieee.org/document/9575441) describes the original use case for which the OSC-Generator was created. 
+See also [this dissertation](https://opus4.kobv.de/opus4-fau/frontdoor/index/index/searchtype/authorsearch/author/Francesco+Montanari/docId/22788/start/0/rows/20).
+
 When using this software, please cite the following: 
 ```
 @software{OSC-Generator,
