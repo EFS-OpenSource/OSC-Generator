@@ -238,7 +238,7 @@ def convert_to_osc(df: pd.DataFrame, ego: list, objects: dict, ego_maneuver_arra
         object_count = idx + 1
         objname = f"Player{object_count}"
         # vehicle
-        if len(object_bb) <= 1 or object_bb[object_count] is None and object_bb_center[object_count] is None:
+        if not object_bb or len(object_bb) <= 1 or object_bb[object_count] is None and object_bb_center[object_count] is None:
             # set default values
             bb_obj.extend([1.872, 4.924, 1.444, 1.376, 0, 0.722])
         elif object_bb[object_count] is None and object_bb_center[object_count] is not None:
