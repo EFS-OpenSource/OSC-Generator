@@ -8,7 +8,9 @@ import os
 try:
     from osc_generator.tools.OSI.OSITrace import OSITrace
 except ImportError:
-    warnings.warn("Feature OSI Input Data is not available. Download from: https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py", UserWarning)
+    warnings.warn("Feature OSI Input Data is not available. If the OSI interface is desired, please download from:"
+                  "https://github.com/OpenSimulationInterface/open-simulation-interface/blob/master/format/OSITrace.py",
+                  UserWarning)
 
 def get_user_defined_attributes(osi_message, path):
     """

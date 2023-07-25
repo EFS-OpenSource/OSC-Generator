@@ -43,7 +43,8 @@ class UserConfig:
                     self.catalogs = data["catalogs"]
 
         except FileNotFoundError:
-            warnings.warn("User configuration file unavailable. ", UserWarning)
+            warnings.warn("User configuration file unavailable/not provided. "
+                          "Default object values will be used", UserWarning)
 
     def write_config(self):
         """
